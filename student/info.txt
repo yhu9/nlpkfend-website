@@ -1,0 +1,4 @@
+1. delete_student_page.php is no longer gonna be used as of 2/5/2018 due to user interface confusion
+2. search_delete_student.php is no longer gonna be used as of 2/5/2018 due to user interface confusion
+3. update_student_page.php is no longer gonna be used as of 2/5/2018 due to user interface confusion
+4. search_updateStudent.php is no longer gonna be used as of 2/5/2018 due to user interface confusion

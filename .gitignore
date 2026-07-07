@@ -1,0 +1,12 @@
+# Database credentials — never commit
+db.ini
+
+# OS cruft
+.DS_Store
+._*
+
+# Uploaded per-entity documents (student/employee/account PII)
+# Keep only the .gitkeep placeholders, ignore all real uploads
+resources/nlp_data/**
+!resources/nlp_data/**/
+!resources/nlp_data/**/.gitkeep

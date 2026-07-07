@@ -1,0 +1,38 @@
+
+@media print{
+    @page {
+        size: portrait;
+        margin: 3em;
+    }
+
+    h1 {
+        margin-top: 20px;
+    }
+
+    table {
+        position: block;
+        display: inline-block;
+        left:0;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    table tr {
+        page-break-inside: avoid;
+        page-break-after: auto;
+    }
+
+    table td {
+        page-break-inside: avoid;
+        page-break-after: auto;
+        white-space: nowrap;
+    }
+
+    .sorter {
+        display: none;
+    }
+
+    div.menu {
+        display: none;
+    }
+}

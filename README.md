@@ -139,13 +139,14 @@ scp -i C:\path\to\LightsailDefaultKey.pem `
   ubuntu@YOUR_IP:/tmp/nlpk.sql
 ```
 
-Back **on the server**, create the DB + the app's user (matching `db.ini` exactly) and import:
+Back **on the server**, create the DB + the app's user and import. Choose your own
+values for `your_db_user` / `your_db_password` — they must match `db.ini` (Step 9) exactly:
 
 ```bash
 sudo mysql <<'SQL'
 CREATE DATABASE IF NOT EXISTS NLPKDB CHARACTER SET utf8;
-CREATE USER IF NOT EXISTS 'NLPKfend'@'localhost' IDENTIFIED BY 'NLPK6565';
-GRANT ALL PRIVILEGES ON NLPKDB.* TO 'NLPKfend'@'localhost';
+CREATE USER IF NOT EXISTS 'your_db_user'@'localhost' IDENTIFIED BY 'your_db_password';
+GRANT ALL PRIVILEGES ON NLPKDB.* TO 'your_db_user'@'localhost';
 FLUSH PRIVILEGES;
 SQL
 
@@ -168,13 +169,16 @@ The app reads `db.ini` from the web root:
 ```bash
 sudo tee /var/www/html/db.ini >/dev/null <<'INI'
 dbhost=localhost
-dbuser=NLPKfend
-dbpass=NLPK6565
+dbuser=your_db_user
+dbpass=your_db_password
 dbname=NLPKDB
 INI
 sudo chown www-data:www-data /var/www/html/db.ini
 sudo chmod 640 /var/www/html/db.ini
 ```
+
+> Use the same `your_db_user` / `your_db_password` you chose in Step 8. These are the
+> **database** credentials only — never commit real values (that's why `db.ini` is gitignored).
 
 ## Step 10 — Test
 
@@ -244,7 +248,7 @@ later, use `close-instance-public-ports` with the same port info.
 |---|---|
 | Instance | Ubuntu 22.04, Lightsail `nlpk-web` |
 | Web root | `/var/www/html` |
-| Database | `NLPKDB` on `localhost`, user `NLPKfend` / `NLPK6565` |
+| Database | `NLPKDB` on `localhost`, user `your_db_user` / `your_db_password` |
 | Dump | `dumps/2026-07-06.sql` → imported into `NLPKDB` |
 | Must-set Apache env | `SITE_HTMLROOT` |
 | Entry flow | `index.html → login.php → homepage.php` |

@@ -1,1 +1,13 @@
 Options +FollowSymLinks
+
+# Never serve the DB credentials (or any .ini file) as static content.
+# Covers db.ini directly. Works on both Apache 2.4 (Require) and 2.2 (Order/Deny).
+<FilesMatch "\.ini$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>

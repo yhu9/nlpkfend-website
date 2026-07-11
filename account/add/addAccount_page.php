@@ -42,7 +42,6 @@
 
                 //Query Successful
                 if($result !== false){
-                    $fields = mysqli_fetch_fields($result);
                     $data = queryAccountBasic($db);
 
                     //show the add Account Form

@@ -46,7 +46,7 @@
                             $val = mysqli_real_escape_string($db,"(SELECT TRUNCATE(DATEDIFF(NOW(),'$dob') / 365.25, 2) as age)");
                             $val = str_replace(array('"'), '', stripslashes($val));
                         }elseif(strpos($field->name,'phone') !== false){
-                            $tmp = mysqli_real_escape_string($db,implode('-',$_POST[$field->name]));
+                            $tmp = mysqli_real_escape_string($db,implode('-',(array)($_POST[$field->name] ?? [])));
                             if($tmp == "--" or $tmp == '-' or $tmp == '')
                                 $val = '';
                             else

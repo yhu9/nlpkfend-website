@@ -75,7 +75,7 @@
                                 $str_fieldname = mysqli_real_escape_string($db,$field->name);
                                 $val = mysqli_real_escape_string($db,$_POST[$field->name]);
                                 if($str_fieldname == "period_start" or $str_fieldname == "period_end")
-                                    $val = mysqli_real_escape_string($db,implode('-',$_POST[$field->name]));
+                                    $val = mysqli_real_escape_string($db,implode('-',(array)($_POST[$field->name] ?? [])));
                                 else
                                     $val = mysqli_real_escape_string($db,$_POST[$field->name]);
 

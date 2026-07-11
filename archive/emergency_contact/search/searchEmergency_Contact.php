@@ -42,7 +42,7 @@
                 $eq_postname = "eq_$field->name";
                 $val = "";
                 if($field->type == 10 or $field->name == "phone_number" or $field->name == "cellphone")
-                    $val = mysqli_real_escape_string($db,implode('-',$_POST[$field->name]));
+                    $val = mysqli_real_escape_string($db,implode('-',(array)($_POST[$field->name] ?? [])));
                 else
                     $val = mysqli_real_escape_string($db,$_POST[$val_postname]);
                 $eq = mysqli_real_escape_string($db,$_POST[$eq_postname]);

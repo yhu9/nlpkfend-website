@@ -56,7 +56,7 @@
                     $tmp = mysqli_real_escape_string($db,implode('-',$_POST[$fieldname]));
                     if($tmp != '--'){
                         $date = DateTime::createFromFormat("m-d-Y",$tmp);
-                        $val = $date->format('Y-m-d');
+                        $val = $date ? $date->format('Y-m-d') : "";
                     }else
                         $val = "";
                 }elseif($field->name == 'time'){

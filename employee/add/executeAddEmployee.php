@@ -38,10 +38,10 @@
                         $str_fieldname = mysqli_real_escape_string($db,$field->name);
                         $val = "";
                         if(strpos($field->name,'date') !== false or $field->name == "DOB"){
-                            $tmp = mysqli_real_escape_string($db,implode('-',$_POST[$field->name]));
+                            $tmp = mysqli_real_escape_string($db,implode('-',(array)($_POST[$field->name] ?? [])));
                             if($tmp != "--" and $tmp != '-' and $tmp != ''){
                                 $date = DateTime::createFromFormat("m-d-Y",$tmp);
-                                $val = $date->format('Y-m-d');
+                                $val = $date ? $date->format('Y-m-d') : "";
                             }else{
                                 $val = "";
                             }
@@ -52,7 +52,7 @@
                             $val = mysqli_real_escape_string($db,"(SELECT TRUNCATE(DATEDIFF(NOW(),'$DOB') / 365.25, 2) as age)");
                             $val = str_replace(array('"'), '', stripslashes($val));
                         }elseif(strpos($field->name,'phone') !== false){
-                            $tmp = mysqli_real_escape_string($db,implode('-',$_POST[$field->name]));
+                            $tmp = mysqli_real_escape_string($db,implode('-',(array)($_POST[$field->name] ?? [])));
                             if($tmp != "--")
                                 $val = $tmp;
                             else

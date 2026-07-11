@@ -160,7 +160,7 @@ function showDetailedData($db,$table,$id){
             if(strpos($f->name,'date') !== false or $f->name == 'DOB'){
                 if($val != ''){
                     $date = new DateTime($row[$f->name]);
-                    $val = $date->format('m-d-Y');
+                    $val = $date ? $date->format('m-d-Y') : "";
                 }else
                     $val = '';
             }else

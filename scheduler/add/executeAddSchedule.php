@@ -74,7 +74,7 @@
                                 $count += 1;
                             }
                         }elseif(strpos($field->name,'phone') !== false){
-                            $tmp = mysqli_real_escape_string($db,implode('-',$_POST[$field->name]));
+                            $tmp = mysqli_real_escape_string($db,implode('-',(array)($_POST[$field->name] ?? [])));
                             if($tmp == "--" or $tmp == '-' or $tmp == '')
                                 $val = '';
                             else

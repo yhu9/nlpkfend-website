@@ -689,7 +689,7 @@ function showDetailedAccount($db,$aid,$year){
                 $str = $row[$f->name];
                 if($str != ''){
                     $date = new DateTime($str);
-                    $val = $date->format('m-d-Y');
+                    $val = $date ? $date->format('m-d-Y') : "";
                 }else
                     $val = '';
             }elseif($f->name == 'mailing_address' or strpos($f->name,'mailing_address') !== false){
@@ -1313,7 +1313,7 @@ function showAddAccountForm($db,$data,$fields,$sdata){
 }
 
 //show detailed Student view
-function showDetailedStudent($db,$sid,$year){
+function showDetailedStudent($db,$sid,$year=null){
     $data = getStudentByID($db,$sid);
 
     echo "<form method='POST'>";
@@ -1344,7 +1344,7 @@ function showDetailedStudent($db,$sid,$year){
             $str = $data['data'][0][$f->name];
             if($str != ''){
                 $date = new DateTime($str);
-                $val = $date->format('m-d-Y');
+                $val = $date ? $date->format('m-d-Y') : "";
             }else
                 $val = '';
         }elseif($f->name == 'mailing_address' or strpos($f->name,'mailing_address') !== false){

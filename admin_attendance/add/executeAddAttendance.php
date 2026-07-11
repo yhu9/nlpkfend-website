@@ -44,11 +44,11 @@
                         $str_fieldname = mysqli_real_escape_string($db,$field->name);
                         $val = "";
                         if(strpos($field->name,'date') !== false or $field->name == "DOB"){
-                            $tmp = mysqli_real_escape_string($db,implode('-',$_POST[$field->name]));
+                            $tmp = mysqli_real_escape_string($db,implode('-',(array)($_POST[$field->name] ?? [])));
                             $date = DateTime::createFromFormat("m-d-Y",$tmp);
-                            $val = $date->format('Y-m-d');
+                            $val = $date ? $date->format('Y-m-d') : "";
                         }elseif($field->name == 'time'){
-                            $str_time = implode(':',$_POST['time']);
+                            $str_time = implode(':',(array)($_POST['time'] ?? []));
                             if($str_time == ":"){
                                 $val = "";
                             }else{
@@ -69,9 +69,9 @@
                             $sid = $sdata['data'][0]['studentID'];
                             $val = "(SELECT auth_type FROM Student WHERE studentID = $sid)";
                         }elseif($field->name == "age"){
-                            $tmp = mysqli_real_escape_string($db,implode('-',$_POST['DOB']));
+                            $tmp = mysqli_real_escape_string($db,implode('-',(array)($_POST['DOB'] ?? [])));
                             $date = DateTime::createFromFormat("m-d-Y",$tmp);
-                            $DOB = $date->format('Y-m-d');
+                            $DOB = $date ? $date->format('Y-m-d') : "";
                             $val = mysqli_real_escape_string($db,"(SELECT TRUNCATE(DATEDIFF(NOW(),'$DOB') / 365.25, 2) as age)");
                             $val = str_replace(array('"'), '', stripslashes($val));
                         }elseif($field->name == "fk_studentID"){
@@ -89,7 +89,7 @@
                             $val = "".$studentID;
                         }
                         else
-                            $val = mysqli_real_escape_string($db,$_POST[$field->name]);
+                            $val = mysqli_real_escape_string($db,is_array($_POST[$field->name] ?? '')?'':($_POST[$field->name] ?? ''));
 
                         if($val != "" and $val != "--"){
                             if($field->type == 16 OR $field->type == 1 OR $field->type == 2 OR $field->type == 3 OR

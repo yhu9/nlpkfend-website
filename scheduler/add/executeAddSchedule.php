@@ -74,13 +74,13 @@
                                 $count += 1;
                             }
                         }elseif(strpos($field->name,'phone') !== false){
-                            $tmp = mysqli_real_escape_string($db,implode('-',$_POST[$field->name]));
+                            $tmp = mysqli_real_escape_string($db,implode('-',(array)($_POST[$field->name] ?? [])));
                             if($tmp == "--" or $tmp == '-' or $tmp == '')
                                 $val = '';
                             else
                                 $val = $tmp;
                         }else
-                            $val = mysqli_real_escape_string($db,$_POST[$field->name]);
+                            $val = mysqli_real_escape_string($db,is_array($_POST[$field->name] ?? '')?'':($_POST[$field->name] ?? ''));
 
                         if($val != "" and $val != "--"){
                             if($field->type == 16 OR $field->type == 1 OR $field->type == 2 OR $field->type == 3 OR

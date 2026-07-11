@@ -50,7 +50,7 @@
                                 echo "</td>";
                             }elseif($field->name == 'date'){
                                 $date = new DateTime();
-                                $now = $date->format('Y-m-d');
+                                $now = $date ? $date->format('Y-m-d') : "";
                                 echo "<td align='center'>\n";
                                 echo "<input type='date' value=$now name=\"$field->name\">\n";
                                 echo "</td>";

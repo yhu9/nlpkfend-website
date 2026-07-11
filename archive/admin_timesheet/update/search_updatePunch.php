@@ -45,9 +45,9 @@
                 $val = mysqli_real_escape_string($db,$_POST[$val_postname]);
                 $eq = mysqli_real_escape_string($db,$_POST[$eq_postname]);
                 if($field->name == "date" or $field->name == "start_date" or $field->name == "DOB" or $field->name == "physical_date")
-                    $val = mysqli_real_escape_string($db,implode('-',$_POST[$field->name]));
+                    $val = mysqli_real_escape_string($db,implode('-',(array)($_POST[$field->name] ?? [])));
                 elseif($field->name == 'time'){
-                    $str_time = mysqli_real_escape_string($db,implode(':',$_POST['time']));
+                    $str_time = mysqli_real_escape_string($db,implode(':',(array)($_POST['time'] ?? [])));
                     if($str_time == ":"){
                         $val = "";
                     }else{

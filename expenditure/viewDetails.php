@@ -42,7 +42,7 @@
             echo "<br><br><hr><br>";
             
             echo "<h2>Total Expenditure $months[$month] $year: $name</h2>";
-            echo "<br><br><h2>$ ".money_format('%i',$total)."</h2>";
+            echo "<br><br><h2>$ ".number_format($total, 2)."</h2>";
 ?>
 
 </body>

@@ -34,7 +34,7 @@
             //Intialize and create line $sql2
             $first_pass = true;
             foreach($finfo as $field){
-                $val = mysqli_real_escape_string($db,$_POST[$field->name]);
+                $val = mysqli_real_escape_string($db,is_array($_POST[$field->name] ?? '')?'':($_POST[$field->name] ?? ''));
                 $condition = "";
                 if($val != "" and $val != "--"){
                     //if field is a numeric

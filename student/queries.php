@@ -272,7 +272,7 @@ function showLateAuthorization($db){
             if(strpos($f->name,'date') !== false OR $f->name == 'DOB' OR $f->name == 'cca end date'){
                 if($row[$f->name] != ''){
                     $date = new DateTime($row[$f->name]);
-                    $output = $date->format('m-d-Y');
+                    $output = $date ? $date->format('m-d-Y') : "";
                 }else
                     $output = '';
             }else

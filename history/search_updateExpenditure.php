@@ -48,7 +48,7 @@
                 $val = mysqli_real_escape_string($db,$_POST[$val_postname]);
                 $eq = mysqli_real_escape_string($db,$_POST[$eq_postname]);
                 if($field->name == "date")
-                    $val = mysqli_real_escape_string($db,implode('-',$_POST[$field->name]));
+                    $val = mysqli_real_escape_string($db,implode('-',(array)($_POST[$field->name] ?? [])));
                 else
                     $val = mysqli_real_escape_string($db,$_POST[$val_postname]);
 

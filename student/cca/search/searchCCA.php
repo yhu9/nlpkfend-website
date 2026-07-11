@@ -28,7 +28,7 @@
         $db = connect();
 
         //Get field values for cca
-        $sql = "SELECT first_name,last_name,CCA.* FROM CCA,Student";
+        $sql = "SELECT first_name,last_name,CCA.* FROM CCA,Student LIMIT 0";
         $result = mysqli_query($db,$sql);
         if($result !== false){
             $finfo = $result->fetch_fields();

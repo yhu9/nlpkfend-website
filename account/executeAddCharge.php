@@ -38,9 +38,9 @@
                 foreach($finfo as $field){
                     if($field->name != "chargeID"){
                         $str_fieldname = mysqli_real_escape_string($db,$field->name);
-                        $val = mysqli_real_escape_string($db,$_POST[$field->name]);
+                        $val = mysqli_real_escape_string($db,is_array($_POST[$field->name] ?? '')?'':($_POST[$field->name] ?? ''));
                         if($field->name == "time"){
-                            $str_time = implode(':',$_POST['time']);
+                            $str_time = implode(':',(array)($_POST['time'] ?? []));
                             if($str_time == ":"){
                                 $val = "";
                             }else{

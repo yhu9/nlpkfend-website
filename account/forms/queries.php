@@ -91,7 +91,7 @@ function showDeletableForm($data,$fields){
     echo "<th>DEL</th></tr>";
 
     //create the content data
-    if(count($data) > 0){
+    if(count($data ?? []) > 0){
         foreach($data as $row){
             $id = $row['fid'];
             echo "<tr class='data' onclick=\"post('/account/forms/update/search_update.php',{'id':$id})\">\n";

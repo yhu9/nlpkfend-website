@@ -161,3 +161,30 @@ For each of `employee student account(+charge/payment/forms) scheduler income
 expenditure receipt log student/cca`, walk: landing → search form → search results →
 add form → detail view → update form → delete form, applying steps 3–6 to each.
 (`history/` has copy-pasted wrong include depths and is tracked as separate work.)
+
+### Runnable: `tests/php8_sweep.sh`
+
+The procedure above is automated end-to-end in `tests/php8_sweep.sh`. Run it on the
+WSL host as root (it reads the Apache error log and reaches MySQL over the socket):
+
+    sudo bash tests/php8_sweep.sh
+
+It runs the three phases and prints only pages that throw a PHP fatal:
+1. **GET** every non-mutating page under the active modules.
+2. **POST** the account detail page with a real account id, and with a real student
+   id + `newstudent=1`.
+3. **POST** every `execute*` mutation page with NONEXISTENT record ids (so
+   UPDATE/DELETE touch zero real rows), wrapped in a `mysqldump` snapshot that is
+   restored afterward. INSERT pages still create rows, so the snapshot restore is
+   what keeps data clean — the script prints the post-restore student count so you
+   can confirm it returned to baseline (1222).
+
+Env overrides: `ADMIN` (real admin with `level>=5`, default `masahu`), `DB`
+(default `NLPKDB`), `DBUSER` (default `nlpkuser`), `APACHE_LOG`.
+
+A clean run prints `0 fatals` for every phase. This is the exact harness used to fix
+the interaction-page PHP-8 regressions (removed `money_format()`; `implode()`/
+`mysqli_real_escape_string()` on array-valued date/time fields; `DateTime::
+createFromFormat()->format()` on `false`; `ArgumentCountError`; empty-string
+`mysqli_query()`). Re-run it before committing changes to query-building or
+form-processing code.

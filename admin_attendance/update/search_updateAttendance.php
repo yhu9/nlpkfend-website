@@ -48,14 +48,14 @@
                 $val = mysqli_real_escape_string($db,$_POST[$val_postname]);
                 $eq = mysqli_real_escape_string($db,$_POST[$eq_postname]);
                 if(strpos($field->name,'date') !== false or $field->name == "DOB"){
-                    $tmp = mysqli_real_escape_string($db,implode('-',$_POST[$field->name]));
+                    $tmp = mysqli_real_escape_string($db,implode('-',(array)($_POST[$field->name] ?? [])));
                     if($tmp != '--'){
                         $date = DateTime::createFromFormat("m-d-Y",$tmp);
-                        $val = $date->format('Y-m-d');
+                        $val = $date ? $date->format('Y-m-d') : "";
                     }else
                         $val = "";
                 }elseif($field->name == 'time'){
-                    $str_time = implode(':',$_POST['time']);
+                    $str_time = implode(':',(array)($_POST['time'] ?? []));
                     if($str_time == ":"){
                         $val = "";
                     }else{

@@ -583,7 +583,7 @@ function showLateAuthorization($data,$fields){
             if(strpos($f->name,'date') !== false OR $f->name == 'DOB' OR $f->name == 'cca end date'){
                 if($row[$f->name] != ''){
                     $date = new DateTime($row[$f->name]);
-                    $output = $date->format('m-d-Y');
+                    $output = $date ? $date->format('m-d-Y') : "";
                 }else
                     $output = '';
             }else
@@ -689,7 +689,7 @@ function showDetailedAccount($db,$aid,$year){
                 $str = $row[$f->name];
                 if($str != ''){
                     $date = new DateTime($str);
-                    $val = $date->format('m-d-Y');
+                    $val = $date ? $date->format('m-d-Y') : "";
                 }else
                     $val = '';
             }elseif($f->name == 'mailing_address' or strpos($f->name,'mailing_address') !== false){
@@ -1313,7 +1313,7 @@ function showAddAccountForm($db,$data,$fields,$sdata){
 }
 
 //show detailed Student view
-function showDetailedStudent($db,$sid,$year){
+function showDetailedStudent($db,$sid,$year=null){
     $data = getStudentByID($db,$sid);
 
     echo "<form method='POST'>";
@@ -1328,7 +1328,7 @@ function showDetailedStudent($db,$sid,$year){
     echo "<button formaction='/student/delete/search_delete.php' name='id' value=$sid><img style='width:30px; height:30px;' src=\"/images/x_mark.png\"></button>\n";
     echo "</th></tr>";
     foreach($data['fields'] as $f){
-        echo "<tr onclick=\"post('update/search_update.php',{'id':$sid})\">\n";
+        echo "<tr onclick=\"post('/student/update/search_update.php',{'id':$sid})\">\n";
         //display the field
         if(strpos($f->name,'ID') !== false){
             $pos = strpos($f->name,'ID');
@@ -1344,7 +1344,7 @@ function showDetailedStudent($db,$sid,$year){
             $str = $data['data'][0][$f->name];
             if($str != ''){
                 $date = new DateTime($str);
-                $val = $date->format('m-d-Y');
+                $val = $date ? $date->format('m-d-Y') : "";
             }else
                 $val = '';
         }elseif($f->name == 'mailing_address' or strpos($f->name,'mailing_address') !== false){

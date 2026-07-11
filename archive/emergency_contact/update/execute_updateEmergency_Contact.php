@@ -45,11 +45,11 @@
             $finfo = $result->fetch_fields();
             $firstpass = 1;
             foreach($finfo as $field){
-                $val = mysqli_real_escape_string($db,$_POST[$field->name]);
+                $val = mysqli_real_escape_string($db,is_array($_POST[$field->name] ?? '')?'':($_POST[$field->name] ?? ''));
                 if($field->type == "10" or $field->name == "phone_number" or $field->name == "cellphone")
-                    $val = mysqli_real_escape_string($db,implode('-',$_POST[$field->name]));
+                    $val = mysqli_real_escape_string($db,implode('-',(array)($_POST[$field->name] ?? [])));
                 else
-                    $val = mysqli_real_escape_string($db,$_POST[$field->name]);
+                    $val = mysqli_real_escape_string($db,is_array($_POST[$field->name] ?? '')?'':($_POST[$field->name] ?? ''));
 
                 if($val != "" and $val != "--"){
                     //if field is a numeric

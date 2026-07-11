@@ -45,7 +45,7 @@
                 $eq_postname = "eq_$field->name";
                 $eq = mysqli_real_escape_string($db,$_POST[$eq_postname]);
                 if($field->name == "period_start" or $field->name == "period_end")
-                    $val = mysqli_real_escape_string($db,implode('-',$_POST[$field->name]));
+                    $val = mysqli_real_escape_string($db,implode('-',(array)($_POST[$field->name] ?? [])));
                 else
                     $val = mysqli_real_escape_string($db,$_POST[$val_postname]);
 

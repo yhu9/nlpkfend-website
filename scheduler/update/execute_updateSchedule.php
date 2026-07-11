@@ -56,15 +56,15 @@
                     $predata = getFieldValue($db,"Schedule",$field->name,$id);
                     $preval = $predata['data'][0][$field->name];
                     if($field->name == "DOB" or strpos($field->name,'date') !== false){
-                        $tmp = mysqli_real_escape_string($db,implode('-',$_POST[$fieldname]));
+                        $tmp = mysqli_real_escape_string($db,implode('-',(array)($_POST[$fieldname] ?? [])));
                         if($tmp == '--' or $tmp == '-' or $tmp == ''){
                             $newval = "";
                         }else{
                             $date = DateTime::createFromFormat("m-d-Y",$tmp);
-                            $newval = $date->format('Y-m-d');
+                            $newval = $date ? $date->format('Y-m-d') : "";
                         }
                     }elseif(strpos($field->name,'time') !== false or $field->name == 'lunch_in' or $field->name == 'lunch_out'){
-                        $str_time = implode(':',$_POST[$fieldname]);
+                        $str_time = implode(':',(array)($_POST[$fieldname] ?? []));
                         if($str_time == ':' or $str_time == '' or $str_time == 'PM' or $str_time == 'AM'){
                             $newval = '';
                         }else{

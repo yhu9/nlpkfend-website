@@ -164,23 +164,32 @@ add form → detail view → update form → delete form, applying steps 3–6 t
 
 ### Runnable: `tests/php8_sweep.sh`
 
-The procedure above is automated end-to-end in `tests/php8_sweep.sh`. Run it on the
-WSL host as root (it reads the Apache error log and reaches MySQL over the socket):
+The procedure above is automated end-to-end in `tests/php8_sweep.sh`. **No root
+needed** — it reads the DB credentials from `db.ini` (the app's `nlpkuser`, which has
+`ALL PRIVILEGES ON NLPKDB.*`) and drives the live app over HTTP:
 
-    sudo bash tests/php8_sweep.sh
+    bash tests/php8_sweep.sh
+
+The one host prerequisite that is *not* in the repo: the running user must be able to
+**read the Apache error log** (`/var/log/apache2/error.log`, mode `640 root:adm`) for
+fatal detection — being in the `adm` group is enough (`sudo usermod -aG adm "$USER"`
+once, then re-login), or point `APACHE_LOG` at a log you can read.
 
 It runs the three phases and prints only pages that throw a PHP fatal:
 1. **GET** every non-mutating page under the active modules.
 2. **POST** the account detail page with a real account id, and with a real student
    id + `newstudent=1`.
 3. **POST** every `execute*` mutation page with NONEXISTENT record ids (so
-   UPDATE/DELETE touch zero real rows), wrapped in a `mysqldump` snapshot that is
-   restored afterward. INSERT pages still create rows, so the snapshot restore is
-   what keeps data clean — the script prints the post-restore student count so you
-   can confirm it returned to baseline (1222).
+   UPDATE/DELETE touch zero real rows), wrapped in a `mysqldump` snapshot (to a fresh
+   user-owned temp file) that is reloaded into the same DB afterward — the dump's
+   per-table `DROP TABLE`/`CREATE TABLE` resets the tables, so no superuser
+   `DROP DATABASE`/`GRANT` is required. INSERT pages still create rows, so the reload
+   is what keeps data clean — the script prints the post-restore student count so you
+   can confirm it returned to baseline (1222). If the snapshot can't be written it
+   aborts *before* any mutation runs.
 
 Env overrides: `ADMIN` (real admin with `level>=5`, default `masahu`), `DB`
-(default `NLPKDB`), `DBUSER` (default `nlpkuser`), `APACHE_LOG`.
+(defaults to `dbname` from `db.ini`), `DB_INI` (default `db.ini`), `APACHE_LOG`.
 
 A clean run prints `0 fatals` for every phase. This is the exact harness used to fix
 the interaction-page PHP-8 regressions (removed `money_format()`; `implode()`/

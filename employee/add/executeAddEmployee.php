@@ -46,9 +46,9 @@
                                 $val = "";
                             }
                         }elseif($field->name == "age"){
-                            $tmp = mysqli_real_escape_string($db,implode('-',$_POST['DOB']));
+                            $tmp = mysqli_real_escape_string($db,implode('-',(array)($_POST['DOB'] ?? [])));
                             $date = DateTime::createFromFormat("m-d-Y",$tmp);
-                            $DOB = $date->format('Y-m-d');
+                            $DOB = $date ? $date->format('Y-m-d') : "";
                             $val = mysqli_real_escape_string($db,"(SELECT TRUNCATE(DATEDIFF(NOW(),'$DOB') / 365.25, 2) as age)");
                             $val = str_replace(array('"'), '', stripslashes($val));
                         }elseif(strpos($field->name,'phone') !== false){
@@ -59,7 +59,7 @@
                                 $val = '';
                         }
                         else
-                            $val = mysqli_real_escape_string($db,$_POST[$field->name]);
+                            $val = mysqli_real_escape_string($db,is_array($_POST[$field->name] ?? '')?'':($_POST[$field->name] ?? ''));
 
                         if($val != "" and $val != "--"){
                             if($field->type == 16 OR $field->type == 1 OR $field->type == 2 OR $field->type == 3 OR

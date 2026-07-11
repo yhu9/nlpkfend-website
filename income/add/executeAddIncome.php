@@ -37,7 +37,7 @@
                 foreach($finfo as $field){
                     if($field->name != "incomeID"){
                         $str_fieldname = mysqli_real_escape_string($db,$field->name);
-                        $val = mysqli_real_escape_string($db,$_POST[$field->name]);
+                        $val = mysqli_real_escape_string($db,is_array($_POST[$field->name] ?? '')?'':($_POST[$field->name] ?? ''));
 
                         if($field->name == 'time')
                             echo $field->name . "  " . $val . "<br>";

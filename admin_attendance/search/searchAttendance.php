@@ -57,7 +57,7 @@
                     }else
                         $val = "";
                 }elseif($field->name == 'time'){
-                    $str_time = implode(':',$_POST['time']);
+                    $str_time = implode(':',(array)($_POST['time'] ?? []));
                     if($str_time == ":"){
                         $val = "";
                     }else{

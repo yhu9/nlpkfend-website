@@ -56,7 +56,7 @@
 
                     //check for any special fields
                     if($field->name == "time"){
-                        $str_time = implode(':',$_POST['time']);
+                        $str_time = implode(':',(array)($_POST['time'] ?? []));
                         if($str_time == ":"){
                             $newval = "";
                         }else{

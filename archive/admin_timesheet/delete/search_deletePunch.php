@@ -52,7 +52,7 @@
                     }else
                         $val = "";
                 }elseif($field->name == 'time'){
-                    $str_time = mysqli_real_escape_string($db,implode(':',$_POST['time']));
+                    $str_time = mysqli_real_escape_string($db,implode(':',(array)($_POST['time'] ?? [])));
                     if($str_time == ":"){
                         $val = "";
                     }else{

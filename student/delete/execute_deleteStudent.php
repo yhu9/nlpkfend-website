@@ -53,7 +53,7 @@
         //execute delete query
         if($oneID != ""){
 
-            mysqli_query($db,$sql);
+            if($sql != "") mysqli_query($db,$sql);
             if($result !== false){
                 if($aid == '')
                     showData($studentData['data'],$studentData['fields']);

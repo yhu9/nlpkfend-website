@@ -49,7 +49,7 @@
                 }elseif($field->name == 'size'){
                     $val = $_FILES['file']['size'];
                 }else
-                    $val = mysqli_real_escape_string($db,$_POST[$field->name]);
+                    $val = mysqli_real_escape_string($db,is_array($_POST[$field->name] ?? '')?'':($_POST[$field->name] ?? ''));
 
                 if($val != "" and $val != "--"){
                     if($field->type == 16 OR $field->type == 1 OR $field->type == 2 OR $field->type == 3 OR

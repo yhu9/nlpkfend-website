@@ -57,7 +57,7 @@
                     $predata = getFieldValue($db,"Charge",$field->name,$id);
                     $preval = $predata['data'][0][$field->name];
                     if($field->name == 'time'){
-                        $str_time = implode(':',$_POST[$fieldname]);
+                        $str_time = implode(':',(array)($_POST[$fieldname] ?? []));
                         if($str_time == ":"){
                             $newval = "";
                         }else{

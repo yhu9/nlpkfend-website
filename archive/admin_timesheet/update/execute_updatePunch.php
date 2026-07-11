@@ -53,7 +53,7 @@
                 $fieldname = "$str_fieldname$id";
                 $val = "";
                 if($field->name == "DOB" or strpos($field->name,'date') !== false){
-                    $tmp = mysqli_real_escape_string($db,implode('-',$_POST[$fieldname]));
+                    $tmp = mysqli_real_escape_string($db,implode('-',(array)($_POST[$fieldname] ?? [])));
                     if($tmp != '--'){
                         $date = DateTime::createFromFormat("m-d-Y",$tmp);
                         $val = $date ? $date->format('Y-m-d') : "";
@@ -61,7 +61,7 @@
                         $val = "";
                 }elseif($field->name == 'time'){
                     $fieldname = "$field->name$id";
-                    $str_time = implode(':',$_POST[$fieldname]);
+                    $str_time = implode(':',(array)($_POST[$fieldname] ?? []));
                     if($str_time == ":"){
                         $val = "";
                     }else{

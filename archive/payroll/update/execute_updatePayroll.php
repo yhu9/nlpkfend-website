@@ -45,7 +45,7 @@
             $finfo = $result->fetch_fields();
             $firstpass = 1;
             foreach($finfo as $field){
-                $val = mysqli_real_escape_string($db,$_POST[$field->name]);
+                $val = mysqli_real_escape_string($db,is_array($_POST[$field->name] ?? '')?'':($_POST[$field->name] ?? ''));
                 if($val != ""){
                     //if field is a numeric
                     if($field->type == 16 OR $field->type == 1 OR $field->type == 2 OR $field->type == 3 OR

@@ -1328,7 +1328,7 @@ function showDetailedStudent($db,$sid,$year=null){
     echo "<button formaction='/student/delete/search_delete.php' name='id' value=$sid><img style='width:30px; height:30px;' src=\"/images/x_mark.png\"></button>\n";
     echo "</th></tr>";
     foreach($data['fields'] as $f){
-        echo "<tr onclick=\"post('update/search_update.php',{'id':$sid})\">\n";
+        echo "<tr onclick=\"post('/student/update/search_update.php',{'id':$sid})\">\n";
         //display the field
         if(strpos($f->name,'ID') !== false){
             $pos = strpos($f->name,'ID');

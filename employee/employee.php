@@ -81,7 +81,7 @@ echo "<script type='text/javascript'>
     document.getElementById(\"content\").innerHTML = \"\" + x;
 </script>";
 ////////////////////////////////////////////////////////////////////////////
-$result->free();
+if (isset($result) && $result instanceof mysqli_result) $result->free();
 $db->close();
 
 ?>

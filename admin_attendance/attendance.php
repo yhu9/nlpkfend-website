@@ -38,7 +38,7 @@ $num_rows = count($attendanceData['data']);
 showData2($attendanceData['data'],$attendanceData['fields']);
 
 ////////////////////////////////////////////////////////////////////////////
-$result->free();
+if (isset($result) && $result instanceof mysqli_result) $result->free();
 $db->close();
 
 ?>

@@ -98,7 +98,7 @@
                 echo("Could not access database fields: <b>" .mysqli_error($db). "</b>");
             }
             
-            $result->free();
+            if (isset($result) && $result instanceof mysqli_result) $result->free();
             $db->close();
         ?>
     </body>

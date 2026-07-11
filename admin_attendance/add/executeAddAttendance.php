@@ -75,7 +75,7 @@
                             $val = mysqli_real_escape_string($db,"(SELECT TRUNCATE(DATEDIFF(NOW(),'$DOB') / 365.25, 2) as age)");
                             $val = str_replace(array('"'), '', stripslashes($val));
                         }elseif($field->name == "fk_studentID"){
-                            $result->free();
+                            if (isset($result) && $result instanceof mysqli_result) $result->free();
                             $first_name = mysqli_real_escape_string($db,$_POST["first_name"]);
                             $last_name = mysqli_real_escape_string($db,$_POST["last_name"]);
                             $studentID = 0;
@@ -122,7 +122,7 @@
                 $sql2 .= ")";
 
                 //Create the combined sql statement and execute the addition of the new attendance
-                $result->free();
+                if (isset($result) && $result instanceof mysqli_result) $result->free();
                 $sql = "$sql1 $sql2";
                 $result = mysqli_query($db,$sql);
 
@@ -147,7 +147,7 @@
                 echo("Could not access database fields: <b>" .mysqli_error($db). "</b>");
             }
             
-            $result->free();
+            if (isset($result) && $result instanceof mysqli_result) $result->free();
             $db->close();
         ?>
     

@@ -30,7 +30,7 @@
             if($result !== false){
                 $finfo = $result->fetch_fields();
                 //Check if one or more Employee is found using that query
-                $result->free();
+                if (isset($result) && $result instanceof mysqli_result) $result->free();
                 $username = mysqli_real_escape_string($db,$_POST["username"]);
                 $password = mysqli_real_escape_string($db,$_POST["password"]);
                 $sql = "SELECT employeeID,username,level,first_name,last_name FROM admin,Employee WHERE username = '$username' and password= '$password' AND fk_employeeID = employeeID";
@@ -193,7 +193,7 @@
                 echo "<br>";
                 echo("Could not access database fields: <b>" .mysqli_error($db). "</b>");
             }
-            $result->free();
+            if (isset($result) && $result instanceof mysqli_result) $result->free();
             $db->close();
         ?>
     </body>

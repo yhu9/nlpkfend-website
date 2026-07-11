@@ -88,7 +88,7 @@
                     $sql2 .= ")";
 
                     //Create the combined sql statement and execute the addition of the new emergency_contact
-                    $result->free();
+                    if (isset($result) && $result instanceof mysqli_result) $result->free();
                     $sql = "$sql1 $sql2";
                     $result = mysqli_query($db,$sql);
 
@@ -112,7 +112,7 @@
                     echo "<h2 align='center'>Number of rows found is WRONG. MUST BE ONE</h2><br>\n";
                 }
             }
-            $result->free();
+            if (isset($result) && $result instanceof mysqli_result) $result->free();
             $db->close();
         ?>
     </body>

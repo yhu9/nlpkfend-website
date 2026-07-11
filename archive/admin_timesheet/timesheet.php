@@ -42,14 +42,14 @@ if($result !== false){
 
     echo "<h3>This page shows last two months</h3>";
     echo "<b>Records Found: $num_rows<br>";
-    $num_rows = mysqli_num_rows($result);
+    $num_rows = ($result instanceof mysqli_result ? mysqli_num_rows($result) : 0);
 }else{
     echo "Query: $sql<br>\n";
     echo "Error accessing data: ".mysqli_error($db) ."<br>\n";
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
-$result->free();
+if (isset($result) && $result instanceof mysqli_result) $result->free();
 $db->close();
 ?>
 

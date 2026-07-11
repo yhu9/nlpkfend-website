@@ -51,13 +51,13 @@ checkAdvancedSession(3);
 include("queries.php");
 
 //Show the results
-$num_rows = count($logData['data']);
+$num_rows = count($logData['data'] ?? []);
 
 //show 1000 most recent logs
 showLogBasic($db);
 
 ////////////////////////////////////////////////////////////////////////////
-$result->free();
+if (isset($result) && $result instanceof mysqli_result) $result->free();
 $db->close();
 
 ?>

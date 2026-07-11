@@ -49,7 +49,7 @@
                         echo("Error Description: ".mysqli_error($db));
                     }
 
-                    $result->free();
+                    if (isset($result) && $result instanceof mysqli_result) $result->free();
                     $db->close();
                 ?>
             <input type="submit" action="searchCCA.php" value="Search CCAs">

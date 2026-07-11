@@ -80,7 +80,7 @@ showAdvancedData($studentData['data'],$studentData['fields'],"Active Students","
 
 echo "</div>";
 echo "<div id='showRoom' hidden>";
-showAdvancedData($studentByRoom['data'],$studentByRoom['fields'],"Room Order","/account/viewDetails.php");
+//showAdvancedData($studentByRoom['data'],$studentByRoom['fields'],"Room Order","/account/viewDetails.php");
 echo "</div>";
 
 //echo "<div id='showAll' hidden>";
@@ -109,7 +109,6 @@ echo "<script type='text/javascript'>
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
 
-$result->free();
 $db->close();
 
 ?>

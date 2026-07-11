@@ -34,7 +34,7 @@
                 $finfo = $result->fetch_fields();
                 
                 //Check if one or more employee is found using that query
-                $result->free();
+                if (isset($result) && $result instanceof mysqli_result) $result->free();
                 $first_name = mysqli_real_escape_string($db,$_POST["first_name"]);
                 $last_name = mysqli_real_escape_string($db,$_POST["last_name"]);
                 $sql = "SELECT * FROM Employee WHERE first_name = '$first_name' and last_name = '$last_name'";
@@ -120,7 +120,7 @@
 
 
                         //Create the combined sql statement and execute the addition of the new payroll
-                        $result->free();
+                        if (isset($result) && $result instanceof mysqli_result) $result->free();
                         $sql = "$sql1 $sql2";
                         $result = mysqli_query($db,$sql);
 
@@ -145,7 +145,7 @@
                 echo("Could not access database fields: <b>" .mysqli_error($db). "</b>");
             }
             
-            $result->free();
+            if (isset($result) && $result instanceof mysqli_result) $result->free();
             $db->close();
         ?>
     </body>

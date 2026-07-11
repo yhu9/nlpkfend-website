@@ -50,7 +50,7 @@ function valueChanger(id1,id2){
             if($result !== false){
                 $finfo = $result->fetch_fields();
                 echo "<form action=\"execute_updateSchedule.php\" method=\"POST\">\n";
-                $found = mysqli_num_rows($result);
+                $found = ($result instanceof mysqli_result ? mysqli_num_rows($result) : 0);
                 echo "<input type='hidden' name='count' value=$found>\n";
 
                 //get the data
@@ -82,7 +82,7 @@ function valueChanger(id1,id2){
             echo "Could not access database: ". mysqli_error($db);
         }
         
-        $result->free();
+        if (isset($result) && $result instanceof mysqli_result) $result->free();
         $db->close();
     ?>
 

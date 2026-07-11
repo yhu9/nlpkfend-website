@@ -65,7 +65,7 @@
                 $sql3 = "ORDER BY $ORDERBY";
             }
 
-            $result->free();
+            if (isset($result) && $result instanceof mysqli_result) $result->free();
             $sql = "$sql1 $sql2 $sql3";
             $result = mysqli_query($db,$sql);
 
@@ -73,7 +73,7 @@
             //Show the students found and save the results
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             if($result !== false){
-                $found = mysqli_num_rows($result);
+                $found = ($result instanceof mysqli_result ? mysqli_num_rows($result) : 0);
 
                 //get the data
                 $finfo = $result->fetch_fields();
@@ -107,7 +107,7 @@
 
             //create the query to show all payment for those kids
             //create the query to show all charges for those kids
-            $result->free();
+            if (isset($result) && $result instanceof mysqli_result) $result->free();
             $sql2 = "";
             $is_first = true;
             foreach($students_found as $row){
@@ -135,23 +135,23 @@
             $sql = "SELECT first_name,last_name,Charge.* FROM Student,Charge WHERE studentID = fk_studentID AND ($sql2) ORDER BY date DESC, time DESC";
             $result = mysqli_query($db,$sql);
             if($result !== false){
-                $num_charges = mysqli_num_rows($result);
+                $num_charges = ($result instanceof mysqli_result ? mysqli_num_rows($result) : 0);
                 $charge_fields = mysqli_fetch_fields($result);
                 while($row = mysqli_fetch_array($result))
                     $charge_data[] = $row;
 
             }
-            $result->free();
+            if (isset($result) && $result instanceof mysqli_result) $result->free();
 
             $sql = "SELECT first_name,last_name,Payment.* FROM Student,Payment WHERE studentID = fk_studentID AND ($sql2) ORDER BY date DESC,time DESC";
             $result = mysqli_query($db,$sql);
             if($result !== false){
-                $num_payments = mysqli_num_rows($result);
+                $num_payments = ($result instanceof mysqli_result ? mysqli_num_rows($result) : 0);
                 $payment_fields = mysqli_fetch_fields($result);
                 while($row = mysqli_fetch_array($result))
                     $payment_data[] = $row;
             }
-            $result->free();
+            if (isset($result) && $result instanceof mysqli_result) $result->free();
             echo "<br><hr>";
 
             //Show the data of payments and charges for these kids
@@ -192,7 +192,7 @@
             echo "</p>";
 
             //create the query to show the balance for each child
-            $result->free();
+            if (isset($result) && $result instanceof mysqli_result) $result->free();
             echo "<div style='position:absolute; width: 50%; margin-left: 25%; margin-right: 25%;bottom:50px;'>";
             echo "<table class='data'>";
             echo "<caption><b>Student Balance<b></caption>\n";
@@ -231,7 +231,7 @@
                     }
                 }
                 echo "</tr>";
-                $result->free();
+                if (isset($result) && $result instanceof mysqli_result) $result->free();
             }
             echo "</table>";
             echo "</div>";
@@ -244,7 +244,7 @@
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////
 
-        $result->free();
+        if (isset($result) && $result instanceof mysqli_result) $result->free();
         $db->close();
         ?>
 		

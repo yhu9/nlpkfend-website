@@ -738,7 +738,7 @@ function insertAttendance($db,$type,$verifier,$room_name,$studentID){
         echo "Error Adding Attendance: ". mysqli_error($db) ."<br>\n";
     }
 
-    $result->free();
+    if (isset($result) && $result instanceof mysqli_result) $result->free();
 
     return $success;
 }
@@ -761,7 +761,7 @@ function insertEmployeeAttendance($db,$type,$verifier,$room_name,$employeeID){
         echo "Error Adding Attendance: ". mysqli_error($db) ."<br>\n";
     }
 
-    $result->free();
+    if (isset($result) && $result instanceof mysqli_result) $result->free();
 
     return $success;
 }
@@ -816,7 +816,7 @@ function getStudentData($db,$first_name,$last_name){
     $return = array();
     $return["data"] = $data;
     $return["fields"] = $fields;
-    $result->free();
+    if (isset($result) && $result instanceof mysqli_result) $result->free();
 
     return $return;
 }
@@ -848,7 +848,7 @@ function getEmployeeData($db,$first_name,$last_name){
     $return = array();
     $return["data"] = $data;
     $return["fields"] = $fields;
-    $result->free();
+    if (isset($result) && $result instanceof mysqli_result) $result->free();
 
     return $return;
 }

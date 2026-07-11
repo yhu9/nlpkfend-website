@@ -55,7 +55,7 @@
                         echo("Error Description: ".mysqli_error($db));
                     }
 
-                    $result->free();
+                    if (isset($result) && $result instanceof mysqli_result) $result->free();
                     $db->close();
                 ?>
             <input type="submit" action="search_deleteAttendance.php" value="Search For Attendances To Delete">

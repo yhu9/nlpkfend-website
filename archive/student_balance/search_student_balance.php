@@ -207,11 +207,11 @@
                 $condition = "studentID = $sid"; 
                 $sql1 = "SELECT first_name,last_name";
                 $sql2 = "";
-                if(count($payment_data) == 0 and count($charge_data) == 0)
+                if(count($payment_data ?? []) == 0 and count($charge_data ?? []) == 0)
                     $sql2 = "SELECT 0 AS Diff";
-                elseif(count($payment_data) == 0)
+                elseif(count($payment_data ?? []) == 0)
                     $sql2 = "SELECT (SELECT SUM(amount) FROM Charge WHERE studentID=fk_studentID and $condition) AS Diff";
-                elseif(count($charge_data) == 0)
+                elseif(count($charge_data ?? []) == 0)
                     $sql2 = "SELECT 0 - (SELECT SUM(amount) FROM Payment WHERE studentID=fk_studentID and $condition) AS Diff";
                 else
                     $sql2 = "SELECT (SELECT SUM(amount) FROM Charge,Student WHERE studentID=fk_studentID AND studentID = $sid) 

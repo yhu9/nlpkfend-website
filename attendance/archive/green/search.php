@@ -37,7 +37,7 @@
             }
 
             //show the student data
-            $found = count($studentData['data']);
+            $found = count($studentData['data'] ?? []);
             echo "<h2 align='center'><u>Student for which attendance is added</u></h2>\n";
             showData($studentData['data'],$studentData['fields']);
             $tmp = 0;

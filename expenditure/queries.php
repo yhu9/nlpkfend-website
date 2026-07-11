@@ -202,7 +202,7 @@ function showExpenditureReportByAccount($db,$year){
         echo "</th>";
 
         //bank_account amount per month
-        for($i = 0; $i < count($months); $i++){
+        for($i = 0; $i < count($months ?? []); $i++){
             $month = $months[$i];
             $monthly_data = queryAccountAmount($db,$bank_account,$i + 1,$year);
             $amount = $monthly_data['data'][0]['total'];
@@ -271,7 +271,7 @@ function showExpenditureReportByCategory($db,$year){
         echo "</th>";
 
         //category amount per month
-        for($i = 0; $i < count($months); $i++){
+        for($i = 0; $i < count($months ?? []); $i++){
             $month = $months[$i];
             $monthly_data = queryCategoryAmount($db,$category,$i + 1,$year);
             $amount = $monthly_data['data'][0]['total'];
@@ -308,7 +308,7 @@ function showExpenditureReportByCategory($db,$year){
 //Show the attendance sheet
 function showDeleteableExpenditure($data,$fields){
 
-    $found = count($data);
+    $found = count($data ?? []);
     echo "<u>$found records found</u><br>\n";
     echo "<table class='data' align=\"center\">";
     echo "<tr>\n";
@@ -346,7 +346,7 @@ function showDetails($db,$category,$account,$month,$year){
     $months = array('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec');
     $expenditure_data = queryDetailExpenditure($db,$category,$account,$month,$year);
 
-    $found = count($expenditure_data['data']);
+    $found = count($expenditure_data['data'] ?? []);
     echo "<u>$found records $months[$month] $year</u><br>\n";
     echo "<form method='POST' action=''>";
     echo "<table class='data' align=\"center\">";

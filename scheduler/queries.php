@@ -76,7 +76,7 @@ function getLastInsertData($db){
 function showSchedule($db,$day){
 
     $data = getSchedulesAll($db);
-    $found = count($data['data']);
+    $found = count($data['data'] ?? []);
 
     echo "<u>$found records found</u><br>\n";
 
@@ -234,7 +234,7 @@ function showSchedule($db,$day){
 //Show the attendance sheet
 function showDeleteableSchedule($db,$data,$fields){
 
-    $found = count($data);
+    $found = count($data ?? []);
     echo "<u>$found records found</u><br>\n";
     echo "<table class='data' align=\"center\">";
     echo "<tr>\n";

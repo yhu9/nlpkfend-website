@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(php -l account/queries.php)",
+      "Bash(mysql NLPKDB -e \"REPLACE INTO session \\(username, ipaddress\\) VALUES \\('masahu','127.0.0.1'\\);\")",
+      "Bash(mysql NLPKDB -N -e \"SELECT studentID FROM Student WHERE status='active' LIMIT 1;\")",
+      "Bash(curl -s -X POST -d 'id=__TRACKED_VAR__&newstudent=1' http://127.0.0.1/account/viewDetails.php -o /tmp/vd.html -w 'http=%{http_code} size=%{size_download}\\\\n')",
+      "Read(//tmp/**)",
+      "Bash(curl -s -X POST -d \"id=598\" http://127.0.0.1/student/update/search_update.php -o /tmp/su.html -w \"http=%{http_code} size=%{size_download}\\\\n\")"
+    ]
+  }
+}

@@ -1,4 +1,3 @@
-<!DOCTYPE HTML>
 <?php
 
     include("config.php");
@@ -8,54 +7,56 @@
     //Creates session for successful login attempt.
     //TO DO:
     //DELETE login session if the same ipaddress already exists
+    //Returns an error message on failure; on success it redirects and exits.
     function create_session($link, $user,$login_attempt,$ipaddress){
         if($login_attempt == 1) {
             $sql_sess_creation = "REPLACE INTO session (username, login_time, ipaddress) VALUES (  '$user', now(), '$ipaddress')";
 
             if(!mysqli_query($link,$sql_sess_creation)){
-                echo "ERROR: could not execute insert. " . mysqli_error($link);
+                return "ERROR: could not execute insert. " . mysqli_error($link);
             }
             else {
                 header("location: homepage.php");
+                exit;
             }
 
         }else{
-            $error = "Your Login Name or Password is invalid";
+            return "Your Login Name or Password is invalid";
         }
+        return "";
     }
 
     //Validates login attempt by checking database for username and password
     //TO DO:
     //1. create separate database for admin and session tables
-    //2. connect to NLPKDB for querying using the database credentials instead of the 
-   
+    //2. connect to NLPKDB for querying using the database credentials instead of the
+
+   $error = "";
    if($_SERVER["REQUEST_METHOD"] == "POST") {
-      // username and password sent from form 
-      
+      // username and password sent from form
+
       $dbuser = mysqli_real_escape_string($db,$_POST['username']);
-      $dbpass = mysqli_real_escape_string($db,$_POST['password']); 
-      
+      $dbpass = mysqli_real_escape_string($db,$_POST['password']);
+
       $sql = "SELECT id FROM admin WHERE username = '$dbuser' and password = '$dbpass'";
       $result = mysqli_query($db,$sql);
-      $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
-      $active = $row['active'];
-      
+
       $count = ($result instanceof mysqli_result ? mysqli_num_rows($result) : 0);
-      
+
       // If result matched $myusername and $mypassword in the admin table, table row must be 1 row
       $ip = getUserIP();
-      create_session($db,$dbuser,$count,$ip);
+      $error = create_session($db,$dbuser,$count,$ip);
 
       mysqli_close($db);
    }
 ?>
-
+<!DOCTYPE HTML>
 <html>
    <head>
        <link rel="stylesheet" type="text/css" href="css/homepage.css">
         <link rel="stylesheet" media="screen and (min-device-width: 1281px) and (max-width:3000px)" href="mystyle.css" />
         <link rel="stylesheet" media="screen and (min-device-width: 100px) and (max-width:1280px)" href="mystyle_small.css"/>
-        <meta name="viewport" conent="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Login Page</title>
       <style type = "text/css">
          body {

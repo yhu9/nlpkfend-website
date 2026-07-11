@@ -63,7 +63,7 @@ $employeeActiveData = getEmployeeActive($db);
 $employeeInactiveData = getEmployeeInactive($db);
 
 //Show the results
-$num_rows = count($employeeData['data']);
+$num_rows = count($employeeData['data'] ?? []);
 
 //keep the content hidden and pick and choose which one you want.
 echo "<div id='showAll' hidden>";

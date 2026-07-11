@@ -1,11 +1,22 @@
+<?php
+    //Gate this admin landing page behind an active session (issue #12).
+    //Placed above all output so checkSession()'s redirect header is valid.
+    include("config.php");
+    $db = connect();
+    if(checkSession() !== 1){
+        //checkSession() has already queued the login redirect; stop here so
+        //the admin navigation is never rendered for an unauthenticated client.
+        exit;
+    }
+?>
 <!DOCTYPE html>
 <html>
-   
+
    <head>
        <link rel="stylesheet" type="text/css" href="css/homepage.css">
         <link rel="stylesheet" media="screen and (min-device-width: 1281px) and (max-width:3000px)" href="mystyle.css" />
         <!--link rel="stylesheet" media="screen and (min-device-width: 100px) and (max-width:1280px)" href="mystyle_small.css" -->
-        <meta name="viewport" conent="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
        <title>NLPS & Childcare Database</title>
     <style>
 
@@ -52,9 +63,10 @@
            <tr>
                <td><form action="account/account.php"><input type="submit" value="Student Account Info"></form></td>
            </tr>
-           <tr>
-               <td><form action="attendance/attendance_home.php"><input type="submit" value="Sign In/Out PROTOTYPE"></form></td>
-           </tr>
+           <!-- Sign In/Out attendance prototype archived (GH #7): the attendance/
+                sub-app is unfinished (room buttons pointed at nonexistent pages),
+                so it is no longer linked from the live homepage. Files remain under
+                attendance/ (room pages under attendance/archive/) for future work. -->
             <tr><td></td></tr>
        </table>
         </td>

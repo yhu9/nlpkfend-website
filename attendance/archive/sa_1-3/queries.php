@@ -180,7 +180,7 @@ function showAttendance($db){
     $otherData = attendance_other($db);
     $employeeData = attendance_employee($db);
 
-    $found = count($studentData['data']);
+    $found = count($studentData['data'] ?? []);
     echo "<u>$found records found</u><br>\n";
     echo "<form method='POST' action='search.php'>\n";
 
@@ -224,7 +224,7 @@ function showAttendance($db){
         //display the most recent clockin/clockout data
         $clockinData = getEmployeeAttendance($db,$row['first_name'],$row['last_name'],'sign in');
         $clockoutData = getEmployeeAttendance($db,$row['first_name'],$row['last_name'],'sign out');
-        if(count($clockinData['data']) == 0){
+        if(count($clockinData['data'] ?? []) == 0){
             echo "<td></td>\n";
         }else{
             $str = $clockinData['data'][0]['time'];
@@ -234,7 +234,7 @@ function showAttendance($db){
             }else
                 echo "<td></td>\n";
         }
-        if(count($clockoutData['data']) == 0){
+        if(count($clockoutData['data'] ?? []) == 0){
             echo "<td></td>\n";
         }else{
             $strin = $clockinData['data'][0]['time'];
@@ -288,7 +288,7 @@ function showAttendance($db){
         //show most recent clockin/clockout
         $clockinData = getAttendance($db,$row['first_name'],$row['last_name'],'sign in');
         $clockoutData = getAttendance($db,$row['first_name'],$row['last_name'],'sign out');
-        if(count($clockinData['data']) == 0){
+        if(count($clockinData['data'] ?? []) == 0){
             echo "<td></td>\n";
             echo "<td></td>\n";
         }else{
@@ -304,7 +304,7 @@ function showAttendance($db){
             }else
                 echo "<td></td>\n";
         }
-        if(count($clockoutData['data']) == 0){
+        if(count($clockoutData['data'] ?? []) == 0){
             echo "<td></td>\n";
             echo "<td></td>\n";
         }else{
@@ -363,7 +363,7 @@ function showAttendance($db){
         
         $clockinData = getAttendance($db,$row['first_name'],$row['last_name'],'sign in');
         $clockoutData = getAttendance($db,$row['first_name'],$row['last_name'],'sign out');
-        if(count($clockinData['data']) == 0){
+        if(count($clockinData['data'] ?? []) == 0){
             echo "<td></td>\n";
             echo "<td></td>\n";
         }else{
@@ -379,7 +379,7 @@ function showAttendance($db){
             }else
                 echo "<td></td>\n";
         }
-        if(count($clockoutData['data']) == 0){
+        if(count($clockoutData['data'] ?? []) == 0){
             echo "<td></td>\n";
             echo "<td></td>\n";
         }else{
@@ -430,7 +430,7 @@ function showAttendance($db){
     echo "</tr>\n";
 
     //closure
-    echo "</table\n";
+    echo "</table>\n";
     echo "</form>\n";
 }
 
@@ -439,7 +439,7 @@ function showAttendance($db){
 function showAllEmployee($db){
     $employeeData = all_employee($db);
 
-    $found = count($employeeData['data']);
+    $found = count($employeeData['data'] ?? []);
     echo "<u>$found records found</u><br>\n";
     echo "<form method='POST' action='searchEmployee.php'>\n";
 
@@ -480,7 +480,7 @@ function showAllEmployee($db){
 
         $clockinData = getAttendance($db,$id,'sign in');
         $clockoutData = getAttendance($db,$id,'sign out');
-        if(count($clockinData['data']) == 0){
+        if(count($clockinData['data'] ?? []) == 0){
             echo "<td></td>\n";
             echo "<td></td>\n";
         }else{
@@ -501,7 +501,7 @@ function showAllEmployee($db){
         $strin = $clockinData['data'][0]['time'];
         $timein = new DateTime($strin);
         $timeout = new DateTime($strout);
-        if(count($clockoutData['data']) == 0){
+        if(count($clockoutData['data'] ?? []) == 0){
             echo "<td></td>\n";
             echo "<td></td>\n";
         }else{
@@ -542,7 +542,7 @@ function showAllEmployee($db){
     echo "</tr>\n";
 
     //closure
-    echo "</table\n";
+    echo "</table>\n";
     echo "</form>\n";
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -579,7 +579,7 @@ function showAllEmployee($db){
 function showAttendanceAll($db){
     $studentData = all_attendance($db);
 
-    $found = count($studentData['data']);
+    $found = count($studentData['data'] ?? []);
     echo "<u>$found records found</u><br>\n";
     echo "<form method='POST' action='search.php'>\n";
 
@@ -620,7 +620,7 @@ function showAttendanceAll($db){
 
         $clockinData = getAttendance($db,$id,'sign in');
         $clockoutData = getAttendance($db,$id,'sign out');
-        if(count($clockinData['data']) == 0){
+        if(count($clockinData['data'] ?? []) == 0){
             echo "<td></td>\n";
             echo "<td></td>\n";
         }else{
@@ -641,7 +641,7 @@ function showAttendanceAll($db){
         $strin = $clockinData['data'][0]['time'];
         $timein = new DateTime($strin);
         $timeout = new DateTime($strout);
-        if(count($clockoutData['data']) == 0){
+        if(count($clockoutData['data'] ?? []) == 0){
             echo "<td></td>\n";
             echo "<td></td>\n";
         }else{
@@ -682,7 +682,7 @@ function showAttendanceAll($db){
     echo "</tr>\n";
 
     //closure
-    echo "</table\n";
+    echo "</table>\n";
     echo "</form>\n";
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

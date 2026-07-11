@@ -74,7 +74,7 @@ $studentPhysicalData = getExpiredPhysical($db);
 $studentAllergies = getAllergies($db);
 
 //Show the results
-$num_rows = count($studentData['data']);
+$num_rows = count($studentData['data'] ?? []);
 echo "<div id='showActive' hidden>";
 showAdvancedData($studentData['data'],$studentData['fields'],"Active Students","/account/viewDetails.php");
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
-    <meta http-equiv="refresh" content="1;url=login.php" />
     <head>
+        <meta http-equiv="refresh" content="1;url=login.php" />
         <link rel="stylesheet" type="text/css" href="mystyle.css">
     </head>
     <body>

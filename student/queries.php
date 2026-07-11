@@ -238,7 +238,7 @@ function getLastInsertData($db){
 function showLateAuthorization($db){
 
     $data = queryLateAuthorization($db);
-    $found = count($data['data']);
+    $found = count($data['data'] ?? []);
 
     echo "<u>$found Accounts found</u><br>\n";
     echo "<form method='post'>\n";
@@ -298,7 +298,7 @@ function showLateAuthorization($db){
 //Show the attendance sheet
 function showDeleteableStudent($db,$data,$fields){
 
-    $found = count($data);
+    $found = count($data ?? []);
     echo "<u>$found records found</u><br>\n";
     echo "<table class='data' align=\"center\">";
     echo "<tr>\n";
@@ -332,10 +332,10 @@ function showDeleteableStudent($db,$data,$fields){
 
 
 function showCCA($data,$fields){
-    $found = count($data);
+    $found = count($data ?? []);
     echo "<u>$found records found</u><br>\n";
     echo "<table class='data' align=\"center\">";
-    $numfields = count($fields) + 2;
+    $numfields = count($fields ?? []) + 2;
     echo "<tr><th colspan=$numfields >Contracts Associated with the Student</th></tr>";
     echo "<tr>\n";
     foreach ($fields as $f){

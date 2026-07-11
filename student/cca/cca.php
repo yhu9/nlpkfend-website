@@ -50,7 +50,7 @@ $inactiveFutureData = getCCAInactive($db);
 $expireData = queryExpiringAuthorization($db);
 
 //Show the results
-$num_rows = count($currentCCAData['data']);
+$num_rows = count($currentCCAData['data'] ?? []);
 echo "<div id='showCurrent' hidden>";
 showCCAData($currentCCAData['data'],$currentCCAData['fields']);
 echo "</div>";

@@ -24,8 +24,8 @@ function getLogBasic($db){
 
 function showLogBasic($db){
     $data = getLogBasic($db);
-    if(count($data['data']) > 0 and count($data['fields']) > 0){
-        $found = count($data['data']);
+    if(count($data['data'] ?? []) > 0 and count($data['fields'] ?? []) > 0){
+        $found = count($data['data'] ?? []);
         echo "<u>$found records found</u><br>\n";
         echo "<table class='datasmall' align=\"center\">";
 
@@ -100,7 +100,7 @@ function getLog($db,$table,$id){
 
 //Show the attendance sheet
 function showDeleteableLog($db,$data,$fields){
-    $found = count($data);
+    $found = count($data ?? []);
     echo "<u>$found records found</u><br>\n";
     echo "<table class='data' align=\"center\">";
     echo "<tr>\n";

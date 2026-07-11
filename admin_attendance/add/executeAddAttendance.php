@@ -80,7 +80,7 @@
                             $last_name = mysqli_real_escape_string($db,$_POST["last_name"]);
                             $studentID = 0;
                             $student_data = getStudentByName($db,$first_name,$last_name);
-                            if(count($student_data['data']) == 1)
+                            if(count($student_data['data'] ?? []) == 1)
                             {
                                 echo "<h2>student for which attendance is added<br></h2>";
                                 showData($student_data['data'],$student_data['fields']);

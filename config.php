@@ -307,7 +307,7 @@ function showAddForm2($db,$data,$fields){
 
         //output if field is required or not
         if($field->flags & 1 AND strpos($field->name,'ID') == false){
-            echo "<td><img src='/images/red_expoint.png' style='width:20px;height:20px;'></src></td>";
+            echo "<td><img src='/images/red_expoint.png' style='width:20px;height:20px;'></td>";
         }
         echo "</tr>";
     }

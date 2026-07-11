@@ -40,7 +40,7 @@
                 $employeeData = getEmployee($db,$username,$password);
 
                 //Show the employee data for which we are adding the punch
-                $found = count($employeeData['data']);
+                $found = count($employeeData['data'] ?? []);
                 echo "<h2 align='center'><u>Employee for which punch is added</u></h2>\n";
                 showData($employeeData['data'],$employeeData['fields']);
 

@@ -84,7 +84,7 @@ function getAttendance($db,$first_name,$last_name,$status){
 //Show the attendance sheet
 function showDeleteableAttendance($db,$data,$fields){
 
-    $found = count($data);
+    $found = count($data ?? []);
     echo "<u>$found records found</u><br>\n";
     echo "<form method='POST' action='search_deleteAttendance.php'>\n";
     echo "<table class='data' align=\"center\">";
@@ -214,7 +214,7 @@ function showMonthlyEditable($db,$month,$year){
             $auth_type = $daily_data['data'][0]['auth_type'];
             $tuition_type = $daily_data['data'][0]['tuition_type'];
             if(!($date > $cur_date or $date->format('N') == 7)){
-                $num = count($daily_data['data']);
+                $num = count($daily_data['data'] ?? []);
                 if($num != 0){
                     if($tuition_type[0] == 'F' or $tuition_type[0] == 'f'){
                         $row_total += 1;
@@ -309,7 +309,7 @@ function showMonthlyEditable($db,$month,$year){
             if($date > $cur_date or $date->format('N') == 7)
                 echo "<td></td>";
             else{
-                $num = count($daily_data['data']);
+                $num = count($daily_data['data'] ?? []);
                 if($num != 0){
                     if($tuition_type[0] == 'F'){
                         $col_total[$i] += 1;
@@ -348,7 +348,7 @@ function showMonthlyEditable($db,$month,$year){
     echo "</table>\n";
 
     //save post information for all field values. MAX post is 100,000 entries
-    $count = count($postnames);
+    $count = count($postnames ?? []);
     echo "<input type='hidden' name='count' value=$count>\n";
     $i = 0;
     foreach($postnames as $n){
@@ -417,7 +417,7 @@ function showMonthlyAttendance($db,$month,$year){
             $auth_type = $daily_data['data'][0]['auth_type'];
             $tuition_type = $daily_data['data'][0]['tuition_type'];
             if(!($date > $cur_date or $date->format('N') == 7)){
-                $num = count($daily_data['data']);
+                $num = count($daily_data['data'] ?? []);
                 if($num != 0){
                     if($tuition_type[0] == 'F'){
                         $row_total += 1;
@@ -584,7 +584,7 @@ function showMonthlyAttendance($db,$month,$year){
             if($date > $cur_date or $date->format('N') == 7)
                 echo "<td></td>";
             else{
-                $num = count($daily_data['data']);
+                $num = count($daily_data['data'] ?? []);
                 if($num != 0){
                     if($tuition_type[0] == 'F'){
                         $col_total[$i] += 1.0;
@@ -678,7 +678,7 @@ function showMonthlyCoverPage($db,$month,$year){
             $auth_type = $daily_data['data'][0]['auth_type'];
             $tuition_type = $daily_data['data'][0]['tuition_type'];
             if(!($date > $cur_date or $date->format('N') == 7)){
-                $num = count($daily_data['data']);
+                $num = count($daily_data['data'] ?? []);
                 if($num != 0){
                     if($tuition_type[0] == 'F'){
                         $row_total += 1;

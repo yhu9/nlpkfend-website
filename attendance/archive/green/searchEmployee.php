@@ -37,7 +37,7 @@
             }
 
             //show the employee data
-            $found = count($employeeData['data']);
+            $found = count($employeeData['data'] ?? []);
             echo "<h2 align='center'><u>employee for which attendance is added</u></h2>\n";
             showData($employeeData['data'],$employeeData['fields']);
             $tmp = 0;

@@ -68,7 +68,7 @@
                             $last_name = mysqli_real_escape_string($db,$_POST["last_name"]);
                             $employeeID = 0;
                             $employee_data = getEmployeeByName($db,$first_name,$last_name);
-                            if(count($employee_data['data']) == 1)
+                            if(count($employee_data['data'] ?? []) == 1)
                             {
                                 echo "<h2>employee for which attendance is added<br></h2>";
                                 showData($employee_data['data'],$employee_data['fields']);

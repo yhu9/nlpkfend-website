@@ -34,7 +34,7 @@ $attendanceData = getattendanceBasic($db);
 
 
 //Show the results
-$num_rows = count($attendanceData['data']);
+$num_rows = count($attendanceData['data'] ?? []);
 showData2($attendanceData['data'],$attendanceData['fields']);
 
 ////////////////////////////////////////////////////////////////////////////

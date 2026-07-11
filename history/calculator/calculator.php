@@ -9,7 +9,7 @@
    <body>
         <!-- Header -->
 
-   <h1><u>Northern Lights Preschool Database<u></h1>
+   <h1><u>Northern Lights Preschool Database</u></h1>
         <div class="menu_color">
         <hr>
             <div class="menu">

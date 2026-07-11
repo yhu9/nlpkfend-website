@@ -52,7 +52,7 @@
                 $days = cal_days_in_month(CAL_GREGORIAN,$month,$year);
 
                 //CHECK to see if the number of rows found is only 1 otherwise something is wrong
-                if(count($data['data']) == 1){
+                if(count($data['data'] ?? []) == 1){
                     //save the employeeID for later use
                     $employeeID = $data['data'][0]['employeeID'];
 
@@ -70,13 +70,13 @@
                             $clockin_data = getPunchData($db,$employeeID,$year,$month,$i,'sign in');
                             $clockout_data = getPunchData($db,$employeeID,$year,$month,$i,'sign out');
                             $fields = getPunchFields($db);
-                            if(count($clockin_data) != count($clockout_data)){
+                            if(count($clockin_data ?? []) != count($clockout_data ?? [])){
                                 echo "<td>Invalid</td>";
-                            }elseif(count($clockin_data) == 0 or count($clockout_data) == 0){
+                            }elseif(count($clockin_data ?? []) == 0 or count($clockout_data ?? []) == 0){
                                 echo "<td>0</td>";
                             }else{
                                 $total = new DateTime('00:00:00');
-                                for($j = 0; $j < count($clockout_data); $j++){
+                                for($j = 0; $j < count($clockout_data ?? []); $j++){
                                     $tstart = $clockin_data[$j]['time'];
                                     $tend = $clockout_data[$j]['time'];
                                     $dtestart = new DateTime($tstart);
@@ -148,7 +148,7 @@
                             echo "<h2 align='center'>Error calculating your total hours! Talk to the administrator!</h2><br>";
                         }else{
                             $total = new DateTime('00:00:00');
-                            for($i = 0; $i < count($clockout_data); $i++){
+                            for($i = 0; $i < count($clockout_data ?? []); $i++){
                                 $tstart = $clockin_data[$i]['time'];
                                 $tend = $clockout_data[$i]['time'];
                                 $dtestart = new DateTime($tstart);

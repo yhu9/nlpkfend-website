@@ -15,7 +15,7 @@ function payment_basic(){
 //Show the deleteable payment sheet 
 function showDeleteablePayment($db,$data,$fields){
 
-    $found = count($data);
+    $found = count($data ?? []);
     echo "<u>$found records found</u><br>\n";
     echo "<table class='data' align=\"center\">";
     echo "<tr>\n";

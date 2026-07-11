@@ -5,7 +5,7 @@
        <link rel="stylesheet" type="text/css" href="../../css/homepage.css">
         <link rel="stylesheet" media="screen and (min-device-width: 1281px) and (max-width:2000px)" href="../../mystyle.css" />
         <link rel="stylesheet" media="screen and (min-device-width: 100px) and (max-width:1280px)" href="../../mystyle_small.css" />
-        <meta name="viewport" conent="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
        <title>NLPS & Childcare Database</title>
     <style>
         select {
@@ -19,7 +19,7 @@
    <body>
         <!-- Header -->
 
-   <h1><u>Northern Lights Preschool Database<u></h1>
+   <h1><u>Northern Lights Preschool Database</u></h1>
         <div class="menu_color">
         <hr>
             <div class="menu">

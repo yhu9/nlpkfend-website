@@ -84,7 +84,7 @@ function minPunchQuery(){
 //Show the attendance sheet
 function showDeleteablePunch($db,$data,$fields){
 
-    $found = count($data);
+    $found = count($data ?? []);
     echo "<u>$found records found</u><br>\n";
     echo "<form method='POST' action='search_deletePunch.php'>\n";
     echo "<table class='data' align=\"center\">";

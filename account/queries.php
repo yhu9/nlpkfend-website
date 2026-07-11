@@ -425,7 +425,7 @@ function showAccountByID($db,$aid){
     echo "<table class='data' align=\"center\" >";
 
     //display the fields
-    $numfields = count($data['fields']) + 2;
+    $numfields = count($data['fields'] ?? []) + 2;
     echo "<tr><th colspan=$numfields>Account Information</th></tr>\n";
     echo "<tr>\n";
     foreach($data['fields'] as $f){
@@ -456,7 +456,7 @@ function showAccountByID($db,$aid){
 
 function showAccountData($db,$data,$fields,$mode){
 
-    $found = count($data);
+    $found = count($data ?? []);
 
     echo "<u>$found Accounts found</u><br>\n";
     echo "<form method='post'>\n";
@@ -545,7 +545,7 @@ function showAccountData($db,$data,$fields,$mode){
 
 function showLateAuthorization($data,$fields){
 
-    $found = count($data);
+    $found = count($data ?? []);
 
     echo "<u>$found Accounts found</u><br>\n";
     echo "<form method='post'>\n";
@@ -620,7 +620,7 @@ function showDetailedAccount($db,$aid,$year){
     $data = getAuthorizations($db,$aid,$year);
     echo "<td colspan='3'>";
     echo "<table class='data' style='font-size:12px;'>\n";
-    $numfields = count($data['fields']) + 2;
+    $numfields = count($data['fields'] ?? []) + 2;
     echo "<tr><th colspan=$numfields style='margin-top:10px;'><font size='5'>Child Care Contracts</font></th></tr>";
     echo "<tr>";
     foreach($data['fields'] as $f){
@@ -916,7 +916,7 @@ function getLastInsertData($db){
 
 //Show the attendance sheet
 function showDeleteableAccount($db,$data,$fields){
-    $found = count($data);
+    $found = count($data ?? []);
     echo "<u>$found records found</u><br>\n";
     echo "<table class='data' align=\"center\">";
     echo "<tr>\n";
@@ -960,7 +960,7 @@ function showEditableAccount($db,$data,$fields){
     }
 
     //show how many found
-    $found = count($data);
+    $found = count($data ?? []);
 
         //create a table
         echo "<table class='editable' align=\"center\">";

@@ -202,7 +202,7 @@ function getLastInsertData($db){
 //Show the attendance sheet
 function showDeleteableCCA($db,$data,$fields){
 
-    $found = count($data);
+    $found = count($data ?? []);
     echo "<u>$found records found</u><br>\n";
     echo "<table class='data' align=\"center\">";
     echo "<tr>\n";
@@ -236,7 +236,7 @@ function showDeleteableCCA($db,$data,$fields){
 
 //improved show data function which links to the update table if it exists
 function showCCAData($data,$fields){
-    $found = count($data);
+    $found = count($data ?? []);
     echo "<u>$found records found</u><br>\n";
     echo "<form action='/upload.php' method='POST' >\n";
     echo "<table class='data' align=\"center\">";

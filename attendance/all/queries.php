@@ -58,7 +58,7 @@ function getAttendance($db,$id,$type){
 function showAttendance($db){
     $studentData = attendance_basic($db);
 
-    $found = count($studentData['data']);
+    $found = count($studentData['data'] ?? []);
     echo "<u>$found records found</u><br>\n";
     echo "<form method='POST' action='search.php'>\n";
 
@@ -99,7 +99,7 @@ function showAttendance($db){
 
         $clockinData = getAttendance($db,$id,'sign in');
         $clockoutData = getAttendance($db,$id,'sign out');
-        if(count($clockinData['data']) == 0){
+        if(count($clockinData['data'] ?? []) == 0){
             echo "<td></td>\n";
             echo "<td></td>\n";
         }else{
@@ -120,7 +120,7 @@ function showAttendance($db){
         $strin = $clockinData['data'][0]['time'];
         $timein = new DateTime($strin);
         $timeout = new DateTime($strout);
-        if(count($clockoutData['data']) == 0){
+        if(count($clockoutData['data'] ?? []) == 0){
             echo "<td></td>\n";
             echo "<td></td>\n";
         }else{
@@ -161,7 +161,7 @@ function showAttendance($db){
     echo "</tr>\n";
 
     //closure
-    echo "</table\n";
+    echo "</table>\n";
     echo "</form>\n";
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

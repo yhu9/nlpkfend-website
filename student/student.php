@@ -75,32 +75,45 @@ $studentAllergies = getAllergies($db);
 
 //Show the results
 $num_rows = count($studentData['data'] ?? []);
-echo "<div id='showActive' hidden>";
-showAdvancedData($studentData['data'],$studentData['fields'],"Active Students","/account/viewDetails.php");
+$total_students = count($studentAllData['data'] ?? []);
 
-echo "</div>";
-echo "<div id='showRoom' hidden>";
-//showAdvancedData($studentByRoom['data'],$studentByRoom['fields'],"Room Order","/account/viewDetails.php");
-echo "</div>";
+if($total_students == 0){
+    //The Student table is empty (e.g. a fresh database). Show a friendly notice
+    //in every "Sort By" view instead of the generic renderer error, and prompt
+    //the user to add a student.
+    $notice = "<h2>There are no students in the Student table.</h2>\n"
+            . "<p>Please <a href='add/addStudent_page.php'>add a student</a> to get started.</p>\n";
+    foreach(array('showActive','showRoom','showAll','showPhysical','showInactive','showAllergies','showAuthorization') as $view){
+        echo "<div id='$view' hidden>$notice</div>\n";
+    }
+}else{
+    echo "<div id='showActive' hidden>";
+    showAdvancedData($studentData['data'],$studentData['fields'],"Active Students","/account/viewDetails.php");
 
-//echo "<div id='showAll' hidden>";
-//showAdvancedData($studentAllData['data'],$studentAllData['fields'],"All Students","/account/viewDetails.php");
-//echo "</div>";
+    echo "</div>";
+    echo "<div id='showRoom' hidden>";
+    //showAdvancedData($studentByRoom['data'],$studentByRoom['fields'],"Room Order","/account/viewDetails.php");
+    echo "</div>";
 
-echo "<div id='showPhysical' hidden>";
-showAdvancedData($studentPhysicalData['data'],$studentPhysicalData['fields'],"Physicals Due This Month","/account/viewDetails.php");
+    //echo "<div id='showAll' hidden>";
+    //showAdvancedData($studentAllData['data'],$studentAllData['fields'],"All Students","/account/viewDetails.php");
+    //echo "</div>";
 
-echo "</div>";
-echo "<div id='showInactive' hidden>";
-showAdvancedData($studentInactiveData['data'],$studentInactiveData['fields'],"Inactive Students","/account/viewDetails.php");
-echo "</div>";
-echo "<div id='showAllergies' hidden>";
-showAdvancedData($studentAllergies['data'],$studentAllergies['fields'],"Allergy List","/account/viewDetails.php");
-echo "</div>";
+    echo "<div id='showPhysical' hidden>";
+    showAdvancedData($studentPhysicalData['data'],$studentPhysicalData['fields'],"Physicals Due This Month","/account/viewDetails.php");
 
-echo "<div id='showAuthorization' hidden>";
-showLateAuthorization($db);
-echo "</div>";
+    echo "</div>";
+    echo "<div id='showInactive' hidden>";
+    showAdvancedData($studentInactiveData['data'],$studentInactiveData['fields'],"Inactive Students","/account/viewDetails.php");
+    echo "</div>";
+    echo "<div id='showAllergies' hidden>";
+    showAdvancedData($studentAllergies['data'],$studentAllergies['fields'],"Allergy List","/account/viewDetails.php");
+    echo "</div>";
+
+    echo "<div id='showAuthorization' hidden>";
+    showLateAuthorization($db);
+    echo "</div>";
+}
 
 echo "<script type='text/javascript'>
     var x = document.getElementById('showActive').innerHTML;

@@ -42,7 +42,7 @@
         showData($insert_data["data"],$insert_data["fields"]);
 
         //result
-        $result->free();
+        if (isset($result) && $result instanceof mysqli_result) $result->free();
         $db->close();
         ?>
 

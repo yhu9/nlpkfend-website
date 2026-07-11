@@ -37,7 +37,7 @@ showDetailedData($db,$table,$id);
 echo "</div>";
 
 ////////////////////////////////////////////////////////////////////////////
-$result->free();
+if (isset($result) && $result instanceof mysqli_result) $result->free();
 $db->close();
 
 ?>

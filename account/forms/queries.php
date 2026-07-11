@@ -19,7 +19,7 @@ function searchForm($db,$aid){
     $return = array();
     $return["data"] = $data;
     $return["fields"] = $fields;
-    $result->free();
+    if (isset($result) && $result instanceof mysqli_result) $result->free();
 
     return $return;
 }
@@ -41,7 +41,7 @@ function getform_fields($db){
     $return = array();
     $return["data"] = $data;
     $return["fields"] = $fields;
-    $result->free();
+    if (isset($result) && $result instanceof mysqli_result) $result->free();
 
     return $return;
 }
@@ -63,7 +63,7 @@ function getformByID($db,$id){
     $return = array();
     $return["data"] = $data;
     $return["fields"] = $fields;
-    $result->free();
+    if (isset($result) && $result instanceof mysqli_result) $result->free();
 
     return $return;
 }

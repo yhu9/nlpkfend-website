@@ -2,6 +2,7 @@
 
 //function to connect
 function connect() {
+    mysqli_report(MYSQLI_REPORT_OFF);
     $config = parse_ini_file('db.ini');
     $dbhost = $config['dbhost'];
     $dbuser = $config['dbuser'];
@@ -44,7 +45,7 @@ function checkSession(){
     $ip = getUserIP();
     $query = "SELECT * FROM session WHERE ipaddress = '$ip'";
     $result = mysqli_query($conn,$query);
-    if(mysqli_num_rows($result) < 1){
+    if(($result instanceof mysqli_result ? mysqli_num_rows($result) : 0) < 1){
         $login = $_SERVER["SITE_HTMLROOT"]."/login.php";
         header("location: $login");
     }
@@ -639,7 +640,7 @@ function showSearchForm($data,$fields){
 
 //function to show data given fields
 function showDataWithLimit($data,$fields,$max){
-    $found = count($data);
+    $found = count($data ?? []);
     echo "<u>$found records found</u><br>\n";
     if($found > $max)
         echo "only $max records will be shown<br>\n";
@@ -701,7 +702,7 @@ function showData($data,$fields){
     echo "</tr>";
 
     //create the content data
-    if(count($data) > 0){
+    if(count($data ?? []) > 0){
         foreach($data as $row){
             echo "<tr class='data'>\n";
             foreach($fields as $f){
@@ -745,13 +746,13 @@ function showData($data,$fields){
 
 //advanced show function for specific showing
 function showAdvancedData($data,$fields,$title,$postdir){
-    if(count($data) > 0 and count($fields) > 0){
-        $found = count($data);
+    if(is_array($data) and is_array($fields) and count($data ?? []) > 0 and count($fields ?? []) > 0){
+        $found = count($data ?? []);
         echo "<u>$found records found</u><br>\n";
         echo "<table class='data' align=\"center\">";
 
         //show the table title
-        $total = count($fields);
+        $total = count($fields ?? []);
         if($title != '')
             echo "<tr><th colspan=$total><b>$title</b></th></tr>\n";
 
@@ -827,13 +828,13 @@ function showAdvancedData($data,$fields,$title,$postdir){
 
 //advanced show function for specific showing
 function showAdvancedData2($data,$fields,$title,$postdir,$postval){
-    if(count($data) > 0 and count($fields) > 0){
-        $found = count($data);
+    if(is_array($data) and is_array($fields) and count($data ?? []) > 0 and count($fields ?? []) > 0){
+        $found = count($data ?? []);
         echo "<u>$found records found</u><br>\n";
         echo "<table class='data' align=\"center\">";
 
         //show the table title
-        $total = count($fields);
+        $total = count($fields ?? []);
         if($title != '')
             echo "<tr><th colspan=$total><b>$title</b></th></tr>\n";
 
@@ -887,7 +888,7 @@ function showAdvancedData2($data,$fields,$title,$postdir,$postval){
 //improved function to show data given fields
 function showDataWithLimit2($data,$fields,$max){
 
-    $found = count($data);
+    $found = count($data ?? []);
     echo "<u>$found records found</u><br>\n";
     if($found > $max)
         echo "only $max records will be shown<br>\n";
@@ -939,7 +940,7 @@ function showDataWithLimit2($data,$fields,$max){
 
 //improved show data function which links to the update table if it exists
 function showData2($data,$fields){
-    $found = count($data);
+    $found = count($data ?? []);
     echo "<u>$found records found</u><br>\n";
     echo "<form action='/upload.php' method='POST' target='_blank'>\n";
     echo "<table class='data' align=\"center\">";
@@ -999,7 +1000,7 @@ function showData2($data,$fields){
 //function to show Editable data given fields
 function showEditableData2($data,$fields){
     //show how many found
-    $found = count($data);
+    $found = count($data ?? []);
 
         //create a table
         echo "<table class='editable' align=\"center\">";
@@ -1245,7 +1246,7 @@ function getFieldValue($db,$table,$field,$id){
     $return = array();
     $return["data"] = $data;
     $return["fields"] = $fields;
-    $result->free();
+    if (isset($result) && $result instanceof mysqli_result) $result->free();
 
     return $return;
 }
@@ -1272,7 +1273,7 @@ function getRowByID($db,$table,$id){
     $return = array();
     $return["data"] = $data;
     $return["fields"] = $fields;
-    $result->free();
+    if (isset($result) && $result instanceof mysqli_result) $result->free();
 
     return $return;
 }
@@ -1325,7 +1326,7 @@ function getAccountByID($db,$id){
     $return = array();
     $return["data"] = $data;
     $return["fields"] = $fields;
-    $result->free();
+    if (isset($result) && $result instanceof mysqli_result) $result->free();
 
     return $return;
 }
@@ -1355,7 +1356,7 @@ function getAttendanceByID($db,$id,$status){
     $return = array();
     $return["data"] = $data;
     $return["fields"] = $fields;
-    $result->free();
+    if (isset($result) && $result instanceof mysqli_result) $result->free();
 
     return $return;
 }
@@ -1436,7 +1437,7 @@ function getEmployeeByName($db,$first_name,$last_name){
     $return = array();
     $return["data"] = $data;
     $return["fields"] = $fields;
-    $result->free();
+    if (isset($result) && $result instanceof mysqli_result) $result->free();
 
     return $return;
 }
@@ -1463,7 +1464,7 @@ function getStudentByName($db,$first_name,$last_name){
     $return = array();
     $return["data"] = $data;
     $return["fields"] = $fields;
-    $result->free();
+    if (isset($result) && $result instanceof mysqli_result) $result->free();
 
     return $return;
 }
@@ -1490,7 +1491,7 @@ function getPunchByID($db,$id){
     $return = array();
     $return["data"] = $data;
     $return["fields"] = $fields;
-    $result->free();
+    if (isset($result) && $result instanceof mysqli_result) $result->free();
 
     return $return;
 }
@@ -1517,7 +1518,7 @@ function getEmployeeByID($db,$id){
     $return = array();
     $return["data"] = $data;
     $return["fields"] = $fields;
-    $result->free();
+    if (isset($result) && $result instanceof mysqli_result) $result->free();
 
     return $return;
 }
@@ -1544,7 +1545,7 @@ function getChargeByID($db,$id){
     $return = array();
     $return["data"] = $data;
     $return["fields"] = $fields;
-    $result->free();
+    if (isset($result) && $result instanceof mysqli_result) $result->free();
 
     return $return;
 }
@@ -1570,7 +1571,7 @@ function getPaymentByID($db,$id){
     $return = array();
     $return["data"] = $data;
     $return["fields"] = $fields;
-    $result->free();
+    if (isset($result) && $result instanceof mysqli_result) $result->free();
 
     return $return;
 }
@@ -1595,7 +1596,7 @@ function getExpenditureByID($db,$id){
     $return = array();
     $return["data"] = $data;
     $return["fields"] = $fields;
-    $result->free();
+    if (isset($result) && $result instanceof mysqli_result) $result->free();
 
     return $return;
 }

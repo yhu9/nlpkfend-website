@@ -54,7 +54,7 @@
                                 $val = mysqli_real_escape_string($db,date('H:i:s',strtotime($str_time)));
                             }
                         }elseif($field->name == "fk_employeeID"){
-                            $result->free();
+                            if (isset($result) && $result instanceof mysqli_result) $result->free();
                             $first_name = mysqli_real_escape_string($db,$_POST["first_name"]);
                             $last_name = mysqli_real_escape_string($db,$_POST["last_name"]);
                             $employeeID = 0;
@@ -101,7 +101,7 @@
                 $sql2 .= ")";
 
                 //Create the combined sql statement and execute the addition of the new punch
-                $result->free();
+                if (isset($result) && $result instanceof mysqli_result) $result->free();
                 $sql = "$sql1 $sql2";
                 $result = mysqli_query($db,$sql);
 
@@ -126,7 +126,7 @@
                 echo("Could not access database fields: <b>" .mysqli_error($db). "</b>");
             }
             
-            $result->free();
+            if (isset($result) && $result instanceof mysqli_result) $result->free();
             $db->close();
         ?>
     

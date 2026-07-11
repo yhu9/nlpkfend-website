@@ -56,7 +56,7 @@
                         $val = mysqli_real_escape_string($db,date('H:i:s',strtotime($str_time)));
                     }
                 }elseif($field->name == 'fk_employeeID'){
-                    $result->free();
+                    if (isset($result) && $result instanceof mysqli_result) $result->free();
                     $first_name = mysqli_real_escape_string($db,$_POST["text_first_name"]);
                     $last_name = mysqli_real_escape_string($db,$_POST["text_last_name"]);
 
@@ -102,7 +102,7 @@
             $ORDERBY = mysqli_real_escape_string($db,$_POST['orderby']);
             $sql3 = "ORDER BY date,time";
 
-            $result->free();
+            if (isset($result) && $result instanceof mysqli_result) $result->free();
             $sql = "$sql1 $sql2 $sql3";
             $result = mysqli_query($db,$sql);
 
@@ -113,7 +113,7 @@
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             echo "<form action=\"execute_updatePunch.php\" method=\"POST\">\n";
             if($result !== false){
-                $found = mysqli_num_rows($result);
+                $found = ($result instanceof mysqli_result ? mysqli_num_rows($result) : 0);
                 echo "<input type='hidden' name='count' value=$found>\n";
 
                 //get the data
@@ -145,7 +145,7 @@
             echo "Could not access database: ". mysqli_error($db);
         }
 
-        $result->free();
+        if (isset($result) && $result instanceof mysqli_result) $result->free();
         $db->close();
     ?>
 

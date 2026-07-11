@@ -32,7 +32,7 @@
             if($result !== false){
                 $finfo = $result->fetch_fields();
                 //Check if one or more Employee is found using that query
-                $result->free();
+                if (isset($result) && $result instanceof mysqli_result) $result->free();
                 $first_name = mysqli_real_escape_string($db,$_POST["first_name"]);
                 $last_name = mysqli_real_escape_string($db,$_POST["last_name"]);
 
@@ -166,7 +166,7 @@
                     echo "<h2 align='center'>Number of employees found is WRONG. MUST BE ONE</h2>";
                 }
             }
-        $result->free();
+        if (isset($result) && $result instanceof mysqli_result) $result->free();
         $db->close();
         ?>
     </body>

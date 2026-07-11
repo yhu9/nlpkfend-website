@@ -48,7 +48,7 @@
                     echo "<input type='submit' value='Add Charge'>\n";
                     echo "</form>\n";
 
-                    $result->free();
+                    if (isset($result) && $result instanceof mysqli_result) $result->free();
                     $db->close();
                 ?>
 </body>

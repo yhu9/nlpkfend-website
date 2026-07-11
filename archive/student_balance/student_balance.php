@@ -27,13 +27,13 @@
         $result = mysqli_query($db,$sql);
         $students_found = 0;
         if($result !== false){
-            $result->free();
+            if (isset($result) && $result instanceof mysqli_result) $result->free();
             $sql = "SELECT * FROM Student WHERE status='active' ORDER BY last_name";
             $student_data = array();
             $students_found = 0;
             $result = mysqli_query($db,$sql);
             if($result !== false){
-                $students_found = mysqli_num_rows($result);
+                $students_found = ($result instanceof mysqli_result ? mysqli_num_rows($result) : 0);
                 while($row = mysqli_fetch_array($result)){
                     $student_data[] = $row;
                 }
@@ -66,13 +66,13 @@
                 $sql = "SELECT * FROM Payment WHERE fk_studentID = $sid";
                 $result = mysqli_query($db,$sql);
                 if($result !== false)
-                    $payment_count = mysqli_num_rows($result);
-                $result->free();
+                    $payment_count = ($result instanceof mysqli_result ? mysqli_num_rows($result) : 0);
+                if (isset($result) && $result instanceof mysqli_result) $result->free();
                 $sql = "SELECT * FROM Charge WHERE fk_studentID = $sid";
                 $result = mysqli_query($db,$sql);
                 if($result !== false)
-                    $charge_count = mysqli_num_rows($result);
-                $result->free();
+                    $charge_count = ($result instanceof mysqli_result ? mysqli_num_rows($result) : 0);
+                if (isset($result) && $result instanceof mysqli_result) $result->free();
 
                 $sql = "$sql1,($sql2) AS Balance FROM Student WHERE studentID = $sid";
                 $result = mysqli_query($db,$sql);
@@ -89,7 +89,7 @@
                     }
                 }
                 echo "</tr>";
-                $result->free();
+                if (isset($result) && $result instanceof mysqli_result) $result->free();
             }
             echo "</table>";
             echo "</div>";
@@ -104,7 +104,7 @@
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////
 
-        $result->free();
+        if (isset($result) && $result instanceof mysqli_result) $result->free();
         $db->close();
         ?>
 		

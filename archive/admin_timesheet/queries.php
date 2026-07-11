@@ -21,7 +21,7 @@ function getPunchData($db,$id,$year,$month,$day,$type){
             $data[] = $row;
     }
 
-    $result->free();
+    if (isset($result) && $result instanceof mysqli_result) $result->free();
 
     return $data;
 }
@@ -41,7 +41,7 @@ function getLastInsertData($db){
     $return = array();
     $return["data"] = $data;
     $return["fields"] = $fields;
-    $result->free();
+    if (isset($result) && $result instanceof mysqli_result) $result->free();
 
     return $return;
 }
@@ -61,7 +61,7 @@ function getEmployeeSearchData($db,$first_name,$last_name){
     $return = array();
     $return["data"] = $data;
     $return["fields"] = $fields;
-    $result->free();
+    if (isset($result) && $result instanceof mysqli_result) $result->free();
 
     return $return;
 }
@@ -72,7 +72,7 @@ function getPunchFields($db){
         $fields=mysqli_fetch_fields($result);
     }
 
-    $result->free();
+    if (isset($result) && $result instanceof mysqli_result) $result->free();
 
     return $fields;
 }

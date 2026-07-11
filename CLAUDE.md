@@ -83,3 +83,81 @@ Tables are PascalCase (`Employee`, `Student`, `Account`, `Charge`, `Payment`, `C
 - **SQL is string-interpolated.** Only some inputs pass through `mysqli_real_escape_string`; queries and INSERTs are assembled by concatenation. Passwords are stored and compared in plaintext. This is the existing baseline — match surrounding code, and be aware new query code sits in an injection-prone context.
 - **`['data','fields']` is the universal contract.** New query functions should return that shape so the `config.php` renderers can consume them; new list/detail views should reuse the existing renderers rather than hand-rolling tables.
 - To add a new CRUD entity, **copy an existing module directory** (`employee/` is the cleanest reference) and rename the entity throughout — that is how every current module was made.
+
+## PHP 8 compatibility: how interaction pages are tested for SQL issues
+
+This app was written for PHP 5/7 and now runs on PHP 8.3 (Ubuntu 24.04/WSL). PHP 8
+turns several previously-tolerated things into fatal errors, and **mysqli throws
+exceptions on SQL errors by default in PHP 8.1+** (PHP 7 returned `false`). The
+landing pages are fixed and verified; the add/search/update/delete/detail pages are
+tested with the method below. Everything runs headless via `curl` against Apache —
+no browser required.
+
+### 1. Drive the app as root inside WSL
+```bash
+wsl -d Ubuntu -u root -- bash -s   # root can query MySQL via socket and read logs
+```
+All requests go to `http://127.0.0.1/<path>`; PHP errors land in
+`/var/log/apache2/error.log`.
+
+### 2. Fake an authenticated session (sessions are keyed by client IP)
+The app has no login cookie — `checkSession()`/`checkAdvancedSession($n)` look up the
+`session` table by the request's IP and compare `admin.level`. To test as "logged in"
+from loopback, insert a session row for 127.0.0.1 using a real level-5 admin so every
+clearance gate passes:
+```bash
+mysql NLPKDB -e "REPLACE INTO session (username, ipaddress) VALUES ('masahu','127.0.0.1');"
+```
+
+### 3. Isolate each request's errors with a log marker
+Before a request, append a unique marker to the error log; after it, read from the
+marker to end-of-file and look for fatals. This attributes errors to the exact request:
+```bash
+M="MK$(date +%s%N)"; echo "$M" >> /var/log/apache2/error.log
+curl -s -o /tmp/out.html -w "%{http_code} %{size_download}\n" http://127.0.0.1/<page>
+awk -v m="$M" '$0 ~ m {f=1; next} f' /var/log/apache2/error.log | grep -i "php fatal\|uncaught"
+```
+HTTP 500 + a fatal in the slice = broken page. A 200 with a tiny byte size that should
+be large = the query returned nothing (soft SQL failure worth investigating).
+
+### 4. Landing pages (GET) vs interaction pages (POST)
+Landing pages `<module>/<module>.php` need only a GET. The add/search/update/delete and
+`viewDetails.php` pages are **schema-driven**: they read `$_POST` keyed by real DB
+column names and build the SQL dynamically. To exercise them, replay a realistic POST:
+```bash
+# find real values to post with
+mysql NLPKDB -e "DESCRIBE Student;"                    # column names/types
+mysql NLPKDB -N -e "SELECT studentID FROM Student WHERE status='active' LIMIT 1;"
+# detail page expects an 'id' (and sometimes 'newstudent'); search pages expect field=value
+curl -s -X POST -d "id=<realID>" http://127.0.0.1/account/viewDetails.php
+curl -s -X POST -d "last_name=Smith" http://127.0.0.1/student/search/searchStudent.php
+```
+Read the matching form page's HTML (`*_page.php`) to get the exact input `name`s, or read
+the module's `queries.php` to see which columns the query references.
+
+### 5. When a page renders but shows no data, get the real MySQL error
+Because we set `mysqli_report(MYSQLI_REPORT_OFF)` in `connect()`, a bad query now returns
+`false` (soft-fail) instead of throwing — the page renders empty or echoes "Error: ...".
+To find the cause, copy the SQL string out of the module's `queries.php` and run it
+directly so MySQL reports the exact problem:
+```bash
+mysql NLPKDB -e "SELECT ...the query from queries.php... ;"
+```
+Typical PHP-8-era culprits this surfaces:
+- **Reserved words used as unquoted columns** (e.g. `function` in the `Log` table) — fix by
+  backticking: `` `function` ``.
+- **Column/table name drift** vs the imported dump.
+- **`count()` / `mysqli_num_rows()` / `->free()` on the null** a failed query returns —
+  guard these (see the existing fixes in `config.php` and module pages).
+
+### 6. Fix → re-verify loop
+After each fix: `php -l <file>` (syntax), re-run the marker probe (expect `200`, zero
+fatals), and check the rendered byte size grew (data now present). Never submit real
+`execute*Add/Update/Delete` writes against live records while testing — use a throwaway
+record or omit the final write step, since these pages mutate the database.
+
+### 7. Coverage checklist per module
+For each of `employee student account(+charge/payment/forms) scheduler income
+expenditure receipt log student/cca`, walk: landing → search form → search results →
+add form → detail view → update form → delete form, applying steps 3–6 to each.
+(`history/` has copy-pasted wrong include depths and is tracked as separate work.)

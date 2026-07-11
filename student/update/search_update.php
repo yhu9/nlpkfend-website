@@ -48,7 +48,7 @@
         if($result !== false){
             $finfo = $result->fetch_fields();
             echo "<form action=\"execute_updateStudent.php\" method=\"POST\" enctype='multipart/form-data'>\n";
-            $found = mysqli_num_rows($result);
+            $found = ($result instanceof mysqli_result ? mysqli_num_rows($result) : 0);
             echo "<input type='hidden' name='count' value=$found>\n";
 
             //get the data
@@ -72,7 +72,7 @@
         }
 
         
-        $result->free();
+        if (isset($result) && $result instanceof mysqli_result) $result->free();
         $db->close();
 ?>
 

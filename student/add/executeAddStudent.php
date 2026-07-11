@@ -86,7 +86,7 @@
 
 
                 //Create the combined sql statement and execute the addition of the new student
-                $result->free();
+                if (isset($result) && $result instanceof mysqli_result) $result->free();
                 $sql = "$sql1 $sql2";
                 $result = mysqli_query($db,$sql);
 
@@ -152,7 +152,7 @@
                 echo "</div>";
             }
             
-            $result->free();
+            if (isset($result) && $result instanceof mysqli_result) $result->free();
             $db->close();
         ?>
     

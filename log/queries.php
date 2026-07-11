@@ -4,7 +4,7 @@
 //Get basic information
 function getLogBasic($db){
     $data = array();
-    $sql = "SELECT pk_info,table_name,date,time,function,old_data,new_data,users_logged_in FROM Log ORDER BY date DESC,time DESC LIMIT 1000";
+    $sql = "SELECT pk_info,table_name,date,time,`function`,old_data,new_data,users_logged_in FROM Log ORDER BY date DESC,time DESC LIMIT 1000";
     $result = mysqli_query($db,$sql);
 
     if($result !== false){

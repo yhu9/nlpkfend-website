@@ -40,7 +40,7 @@
       $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
       $active = $row['active'];
       
-      $count = mysqli_num_rows($result);
+      $count = ($result instanceof mysqli_result ? mysqli_num_rows($result) : 0);
       
       // If result matched $myusername and $mypassword in the admin table, table row must be 1 row
       $ip = getUserIP();

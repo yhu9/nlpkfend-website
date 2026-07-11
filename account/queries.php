@@ -18,7 +18,7 @@ function queryAccountBasic($db){
     $return = array();
     $return["data"] = $data;
     $return["fields"] = $fields;
-    $result->free();
+    if (isset($result) && $result instanceof mysqli_result) $result->free();
 
     return $return;
 }
@@ -85,7 +85,7 @@ SELECT account_detail.* FROM Account
     $return = array();
     $return["data"] = $data;
     $return["fields"] = $fields;
-    $result->free();
+    if (isset($result) && $result instanceof mysqli_result) $result->free();
 
     return $return;
 }
@@ -133,7 +133,7 @@ function queryAccountsInactive($db){
     $return = array();
     $return["data"] = $data;
     $return["fields"] = $fields;
-    $result->free();
+    if (isset($result) && $result instanceof mysqli_result) $result->free();
 
     return $return;
 }
@@ -211,7 +211,7 @@ function queryMonthlyTuition($db,$date){
     $return = array();
     $return["data"] = $data;
     $return["fields"] = $fields;
-    $result->free();
+    if (isset($result) && $result instanceof mysqli_result) $result->free();
 
     return $return;
 }
@@ -241,7 +241,7 @@ function queryNextMonthTuition($db){
     $return = array();
     $return["data"] = $data;
     $return["fields"] = $fields;
-    $result->free();
+    if (isset($result) && $result instanceof mysqli_result) $result->free();
 
     return $return;
 }
@@ -271,7 +271,7 @@ function queryLastMonthTuition($db){
     $return = array();
     $return["data"] = $data;
     $return["fields"] = $fields;
-    $result->free();
+    if (isset($result) && $result instanceof mysqli_result) $result->free();
 
     return $return;
 }
@@ -307,7 +307,7 @@ function queryLateAuthorization($db){
     $return = array();
     $return["data"] = $data;
     $return["fields"] = $fields;
-    $result->free();
+    if (isset($result) && $result instanceof mysqli_result) $result->free();
 
     return $return;
 }
@@ -357,7 +357,7 @@ function queryAccountsDue($db){
     $return = array();
     $return["data"] = $data;
     $return["fields"] = $fields;
-    $result->free();
+    if (isset($result) && $result instanceof mysqli_result) $result->free();
 
     return $return;
 }
@@ -384,7 +384,7 @@ function getAuthorizations($db,$id,$year){
     $return = array();
     $return["data"] = $data;
     $return["fields"] = $fields;
-    $result->free();
+    if (isset($result) && $result instanceof mysqli_result) $result->free();
 
     return $return;
 }
@@ -410,7 +410,7 @@ function getStudentnames($db,$aid,$mode){
     $return = array();
     $return["data"] = $data;
     $return["fields"] = $fields;
-    $result->free();
+    if (isset($result) && $result instanceof mysqli_result) $result->free();
 
     return $return;
 }

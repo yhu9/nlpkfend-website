@@ -152,7 +152,7 @@
             echo "<h1>Nothing Changed</h1>\n";
         }
 
-        $result->free();
+        if (isset($result) && $result instanceof mysqli_result) $result->free();
         $db->close();
 ?>
 

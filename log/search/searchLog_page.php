@@ -26,7 +26,7 @@
                     checkSession();
 
                     //create query
-                    $sql = "SELECT logID, pk_info, table_name,date,function,users_logged_in FROM Log";
+                    $sql = "SELECT logID, pk_info, table_name,date,`function`,users_logged_in FROM Log";
                     $result = mysqli_query($db,$sql);
                     $data = array();
 
@@ -43,7 +43,7 @@
                         echo("Error Description: ".mysqli_error($db));
                     }
 
-                    $result->free();
+                    if (isset($result) && $result instanceof mysqli_result) $result->free();
                     $db->close();
                 ?>
             <input type="submit" action="searchLog.php" value="Search Log">

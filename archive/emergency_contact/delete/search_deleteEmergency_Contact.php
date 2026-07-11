@@ -76,7 +76,7 @@
                 $sql3 = "ORDER BY $ORDERBY";
             }
 
-            $result->free();
+            if (isset($result) && $result instanceof mysqli_result) $result->free();
             $sql = "$sql1 $sql2 $sql3";
             $result = mysqli_query($db,$sql);
 
@@ -87,7 +87,7 @@
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             echo "<form action=\"execute_deleteEmergency_Contact.php\" method=\"POST\">\n";
             if($result !== false){
-                $found = mysqli_num_rows($result);
+                $found = ($result instanceof mysqli_result ? mysqli_num_rows($result) : 0);
                 echo "<input type='hidden' name='count' value=$found>\n";
 
                 //get the data
@@ -137,7 +137,7 @@
             echo "Could not access database: ". mysqli_error($db);
         }
         
-        $result->free();
+        if (isset($result) && $result instanceof mysqli_result) $result->free();
         $db->close();
     ?>
 

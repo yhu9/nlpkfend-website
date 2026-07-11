@@ -76,7 +76,7 @@
                 $sql2 .= ")";
 
                 //Create the combined sql statement and execute the addition of the new cca
-                $result->free();
+                if (isset($result) && $result instanceof mysqli_result) $result->free();
                 $sql = "$sql1 $sql2";
                 $sql_list[] = $sql;
                 $result = mysqli_query($db,$sql);
@@ -130,7 +130,7 @@
                 }
             }
         }
-        $result->free();
+        if (isset($result) && $result instanceof mysqli_result) $result->free();
         $db->close();
         ?>
     </body>

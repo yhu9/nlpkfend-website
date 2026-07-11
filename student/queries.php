@@ -33,7 +33,7 @@ function getStudentByRoom($db){
     $return = array();
     $return["data"] = $data;
     $return["fields"] = $fields;
-    $result->free();
+    if (isset($result) && $result instanceof mysqli_result) $result->free();
 
     return $return;
 }
@@ -61,7 +61,7 @@ function getAllergies($db){
     $return = array();
     $return["data"] = $data;
     $return["fields"] = $fields;
-    $result->free();
+    if (isset($result) && $result instanceof mysqli_result) $result->free();
 
     return $return;
 }
@@ -88,7 +88,7 @@ function getStudentBasic($db){
     $return = array();
     $return["data"] = $data;
     $return["fields"] = $fields;
-    $result->free();
+    if (isset($result) && $result instanceof mysqli_result) $result->free();
 
     return $return;
 }
@@ -117,7 +117,7 @@ function getStudentsAll($db){
     $return = array();
     $return["data"] = $data;
     $return["fields"] = $fields;
-    $result->free();
+    if (isset($result) && $result instanceof mysqli_result) $result->free();
 
     return $return;
 }
@@ -143,7 +143,7 @@ function getStudentInactive($db){
     $return = array();
     $return["data"] = $data;
     $return["fields"] = $fields;
-    $result->free();
+    if (isset($result) && $result instanceof mysqli_result) $result->free();
 
     return $return;
 }
@@ -172,7 +172,7 @@ function queryLateAuthorization($db){
     $return = array();
     $return["data"] = $data;
     $return["fields"] = $fields;
-    $result->free();
+    if (isset($result) && $result instanceof mysqli_result) $result->free();
 
     return $return;
 }
@@ -207,7 +207,7 @@ function getExpiredPhysical($db){
     $return = array();
     $return["data"] = $data;
     $return["fields"] = $fields;
-    $result->free();
+    if (isset($result) && $result instanceof mysqli_result) $result->free();
 
     return $return;
 }

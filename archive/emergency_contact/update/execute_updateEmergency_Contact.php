@@ -103,7 +103,7 @@
             echo "<h1 align='center'>Something went wrong</h1>";
         }
         
-        $result->free();
+        if (isset($result) && $result instanceof mysqli_result) $result->free();
         $db->close();
         ?>
 </body>
